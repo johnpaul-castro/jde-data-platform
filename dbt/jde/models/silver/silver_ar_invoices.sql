@@ -1,4 +1,13 @@
-{{ config(schema='silver', materialized='view') }}
+{{ config(
+    schema='silver',
+    materialized='table',
+    indexes=[
+      {'columns': ['document_id'], 'unique': true},
+      {'columns': ['customer_id']},
+      {'columns': ['pay_status']},
+      {'columns': ['post_status']}
+    ]
+) }}
 
 SELECT
     TRIM("RPDOC")::INTEGER       AS document_id,

@@ -1,4 +1,13 @@
-{{ config(schema='silver', materialized='view') }}
+{{ config(
+    schema='silver',
+    materialized='table',
+    indexes=[
+      {'columns': ['item_id'], 'unique': true},
+      {'columns': ['item_number']},
+      {'columns': ['gl_class']},
+      {'columns': ['product_group']}
+    ]
+) }}
 
 SELECT
     TRIM("IMITM")::INTEGER       AS item_id,

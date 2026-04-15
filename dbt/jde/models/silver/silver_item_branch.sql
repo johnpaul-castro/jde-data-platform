@@ -1,4 +1,12 @@
-{{ config(schema='silver', materialized='view') }}
+{{ config(
+    schema='silver',
+    materialized='table',
+    indexes=[
+      {'columns': ['item_id']},
+      {'columns': ['business_unit']},
+      {'columns': ['item_id', 'business_unit'], 'unique': true}
+    ]
+) }}
 
 SELECT
     TRIM("IBMCU")                AS business_unit,

@@ -1,4 +1,11 @@
-{{ config(schema='silver', materialized='view') }}
+{{ config(
+    schema='silver',
+    materialized='table',
+    indexes=[
+      {'columns': ['address_id']},
+      {'columns': ['address_id', 'effective_date_raw']}
+    ]
+) }}
 
 SELECT
     TRIM("ALAN8")::INTEGER       AS address_id,

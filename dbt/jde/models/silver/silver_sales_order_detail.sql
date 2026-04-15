@@ -1,4 +1,13 @@
-{{ config(schema='silver', materialized='view') }}
+{{ config(
+    schema='silver',
+    materialized='table',
+    indexes=[
+      {'columns': ['order_id']},
+      {'columns': ['item_id']},
+      {'columns': ['order_id', 'line_number'], 'unique': true},
+      {'columns': ['next_status']}
+    ]
+) }}
 
 SELECT
     TRIM("SDDOCO")::INTEGER      AS order_id,
