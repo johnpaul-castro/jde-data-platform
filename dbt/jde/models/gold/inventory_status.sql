@@ -1,4 +1,7 @@
-{{ config(schema='gold', materialized='table') }}
+{{ config(
+    schema='gold',
+    materialized='table'
+) }}
 
 SELECT
     i.item_id,
@@ -13,7 +16,7 @@ SELECT
     b.cost_average,
     b.price_list,
     ROUND(b.quantity_on_hand * b.cost_average, 2)  AS inventory_value
-FROM {{ ref('silver_item_master') }} i
-LEFT JOIN {{ ref('silver_item_branch') }} b ON i.item_id = b.item_id
+FROM {{ ref('item_master') }} i
+LEFT JOIN {{ ref('item_branch') }} b ON i.item_id = b.item_id
 WHERE b.quantity_on_hand > 0
 ORDER BY inventory_value DESC

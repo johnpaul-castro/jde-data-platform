@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: jde_postgres
+    environment:
+      POSTGRES_USER: jp
+      POSTGRES_PASSWORD: jp
+      POSTGRES_DB: jde_dw
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - jde_network
+
+  airflow:
+    image: apache/airflow:2.9.3
+    container_name: jde_airflow
+    depends_on:
+      - postgres
+    environment:
+      AIRFLOW__CORE__EXECUTOR: LocalExecutor
+      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://jp:jp@postgres:5432/jde_dw
+      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+      AIRFLOW__WEBSERVER__SECRET_KEY: 'jde_demo_secret'
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./airflow/dags:/opt/airflow/dags
+      - ./dbt:/opt/airflow/dbt
+      - ./extractors:/opt/airflow/extractors
+    networks:
+      - jde_network
+    command: standalone
+
+volumes:
+  postgres_data:
+
+networks:
+  jde_network:
+    driver: bridge

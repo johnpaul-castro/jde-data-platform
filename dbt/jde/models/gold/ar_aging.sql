@@ -1,4 +1,7 @@
-{{ config(schema='gold', materialized='table') }}
+{{ config(
+    schema='gold',
+    materialized='table'
+) }}
 
 SELECT
     ar.customer_id,
@@ -10,7 +13,7 @@ SELECT
     SUM(CASE WHEN ar.pay_status = 'A' THEN ar.amount_open ELSE 0 END) AS amount_current,
     SUM(CASE WHEN ar.pay_status = 'P' THEN ar.amount_open ELSE 0 END) AS amount_past_due,
     ar.currency_code
-FROM {{ ref('silver_ar_invoices') }} ar
-LEFT JOIN {{ ref('silver_address_book') }} a ON ar.customer_id = a.address_id
+FROM {{ ref('ar_invoices') }} ar
+LEFT JOIN {{ ref('address_book') }} a ON ar.customer_id = a.address_id
 GROUP BY ar.customer_id, a.address_name, ar.currency_code
 ORDER BY total_open DESC
