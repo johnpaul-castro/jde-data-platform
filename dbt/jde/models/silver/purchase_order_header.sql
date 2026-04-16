@@ -10,20 +10,28 @@
 ) }}
 
 SELECT
+    -- Keys
     TRIM("PHDOCO")::INTEGER      AS order_id,
-    TRIM("PHDCTO")               AS order_type,
     TRIM("PHKCOO")               AS company,
-    TRIM("PHTRDJ")               AS date_transaction_raw,
-    TRIM("PHDRQJ")               AS date_requested_raw,
-    TRIM("PHPDDJ")               AS date_promised_raw,
+
+    -- Attributes
+    TRIM("PHDCTO")               AS order_type,
     TRIM("PHAN8")::INTEGER       AS vendor_id,
     TRIM("PHMCU")                AS business_unit,
     TRIM("PHVR01")               AS reference,
     TRIM("PHCR")                 AS currency_code,
+    TRIM("PHUSER")               AS updated_by,
+
+    -- Dates
+    {{ jde_date('"PHTRDJ"') }}   AS date_transaction,
+    {{ jde_date('"PHDRQJ"') }}   AS date_requested,
+    {{ jde_date('"PHPDDJ"') }}   AS date_promised,
+    {{ jde_date('"PHUPMJ"') }}   AS date_updated,
+
+    -- Amounts
     TRIM("PHCRR")::NUMERIC       AS exchange_rate,
     TRIM("PHTOTL")::NUMERIC      AS order_total,
-    TRIM("PHUSER")               AS updated_by,
-    TRIM("PHUPMJ")               AS updated_date_raw,
+
     raw_synced_at
 FROM bronze."F4301"
 WHERE "PHDOCO" IS NOT NULL

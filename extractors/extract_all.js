@@ -4,13 +4,13 @@ const { Pool } = require('pg');
 const srcConfig = {
   user: 'jde_user',
   password: 'jde_pass',
-  server: '172.17.224.1',
+  server: '192.168.65.254',
   port: 1433,
   database: 'jde_demo',
   options: { trustServerCertificate: true }
 };
 
-const pg = new Pool({ host: 'localhost', port: 5432, database: 'jde_dw', user: 'jp', password: 'jp' });
+const pg = new Pool({ host: 'postgres', port: 5432, database: 'jde_dw', user: 'jp', password: 'jp' });
 
 const tables = ['F0101','F0116','F03B11','F4101','F4102','F41021','F4201','F4211','F4301','F4311'];
 

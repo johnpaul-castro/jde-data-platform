@@ -1,0 +1,12 @@
+jde:
+  target: dev
+  outputs:
+    dev:
+      type: postgres
+      host: postgres
+      port: 5432
+      user: jp
+      password: jp
+      dbname: jde_dw
+      schema: public
+      threads: 4
