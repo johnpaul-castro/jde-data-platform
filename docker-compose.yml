@@ -1,5 +1,23 @@
 version: '3.8'
 
+x-airflow-common: &airflow-common
+  build: .
+  environment:
+    AIRFLOW__CORE__EXECUTOR: LocalExecutor
+    AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://jp:jp@postgres:5432/jde_dw
+    AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+    AIRFLOW__WEBSERVER__SECRET_KEY: 'jde_demo_secret'
+    NODE_PATH: /home/airflow/extractor_modules/node_modules
+    DBT_LOG_PATH: /home/airflow/dbt_logs
+  volumes:
+    - ./airflow/dags:/opt/airflow/dags
+    - ./dbt:/opt/airflow/dbt
+    - ./extractors:/opt/airflow/extractors
+  networks:
+    - jde_network
+  depends_on:
+    - postgres
+
 services:
   postgres:
     image: postgres:16
@@ -15,27 +33,25 @@ services:
     networks:
       - jde_network
 
-  airflow:
-    build: .
+  airflow-init:
+    <<: *airflow-common
+    container_name: jde_airflow_init
+    command: db migrate
+    restart: "no"
+
+  airflow-webserver:
+    <<: *airflow-common
     container_name: jde_airflow
-    depends_on:
-      - postgres
-    environment:
-      AIRFLOW__CORE__EXECUTOR: LocalExecutor
-      AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://jp:jp@postgres:5432/jde_dw
-      AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
-      AIRFLOW__WEBSERVER__SECRET_KEY: 'jde_demo_secret'
-      NODE_PATH: /home/airflow/extractor_modules/node_modules
-      DBT_LOG_PATH: /home/airflow/dbt_logs
+    command: webserver
     ports:
       - "8080:8080"
-    volumes:
-      - ./airflow/dags:/opt/airflow/dags
-      - ./dbt:/opt/airflow/dbt
-      - ./extractors:/opt/airflow/extractors
-    networks:
-      - jde_network
-    command: standalone
+    restart: unless-stopped
+
+  airflow-scheduler:
+    <<: *airflow-common
+    container_name: jde_airflow_scheduler
+    command: scheduler
+    restart: unless-stopped
 
 volumes:
   postgres_data:
