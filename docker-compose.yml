@@ -51,10 +51,27 @@ services:
     <<: *airflow-common
     container_name: jde_airflow_scheduler
     command: scheduler
+    ports:
+      - "8081:8081"    
     restart: unless-stopped
+  forgejo:
+    image: gitea/gitea:latest
+    container_name: jde_forgejo
+    environment:
+      - USER_UID=1000
+      - USER_GID=1000
+    ports:
+      - "3000:3000"
+      - "2222:22"
+    volumes:
+      - forgejo_data:/data
+    networks:
+      - jde_network
+    restart: unless-stopped    
 
 volumes:
   postgres_data:
+  forgejo_data:  
 
 networks:
   jde_network:

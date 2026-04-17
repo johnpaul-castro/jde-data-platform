@@ -15,8 +15,7 @@ WITH source AS (
         TRIM("ABDC")                 AS description,
         TRIM("ABTAX")                AS tax_id,
         TRIM("ABSIC")                AS sic_code,
-        TRIM("ABCM")                 AS currency_code,
-        TRIM("ABCR")                 AS credit_rating,
+        TRIM("ABCM")                 AS credit_message,
         TRIM("ABUSER")               AS updated_by,
         {{ jde_date('"ABUPMJ"') }}   AS date_updated,
         raw_synced_at
@@ -33,7 +32,7 @@ deduped AS (
 )
 SELECT
     address_id, address_key, address_type, address_name,
-    description, tax_id, sic_code, currency_code,
-    credit_rating, updated_by, date_updated, raw_synced_at
+    description, tax_id, sic_code, credit_message,
+    updated_by, date_updated, raw_synced_at
 FROM deduped
 WHERE rn = 1
