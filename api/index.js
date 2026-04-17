@@ -138,4 +138,16 @@ fastify.get('/api/customers/:id/sales', async (req, reply) => {
   return result.rows
 })
 
+// Get purchasing by vendor from Gold
+fastify.get('/api/purchasing', async (req, reply) => {
+  const result = await db.query(`
+    SELECT vendor_id, vendor_name, total_orders, total_received,
+           total_spend, avg_unit_cost, last_order_date
+    FROM gold.purchasing_by_vendor
+    ORDER BY total_spend DESC
+    LIMIT 10
+  `)
+  return result.rows
+})
+
 start()

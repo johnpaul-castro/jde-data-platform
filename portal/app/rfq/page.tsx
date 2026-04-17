@@ -37,16 +37,18 @@ function RFQForm() {
 
   if (submitted) {
     return (
-      <div className="bg-green-50 border border-green-200 rounded-xl p-8 text-center">
-        <div className="text-4xl mb-4">✅</div>
-        <h3 className="text-xl font-bold text-green-800 mb-2">RFQ Submitted Successfully</h3>
-        <p className="text-green-600 mb-6">Your request has been received and routed to the appropriate team.</p>
+      <div className="bg-slate-900 border border-green-800 rounded-xl p-10 text-center max-w-2xl">
+        <div className="text-5xl mb-4">✅</div>
+        <h3 className="text-xl font-bold text-white mb-2">RFQ Submitted Successfully</h3>
+        <p className="text-slate-400 mb-8">Your request has been received and routed to the appropriate team.</p>
         <div className="flex gap-4 justify-center">
-          <button onClick={() => { setSubmitted(false); setForm({ customer_id: '', item_id: '', quantity: '', notes: '' }) }}
-            className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">
+          <button
+            onClick={() => { setSubmitted(false); setForm({ customer_id: '', item_id: '', quantity: '', notes: '' }) }}
+            className="bg-blue-600 hover:bg-blue-500 text-white px-6 py-2.5 rounded-lg font-semibold transition-colors">
             Submit Another RFQ
           </button>
-          <Link href="/dashboard" className="bg-slate-200 text-slate-800 px-6 py-2 rounded-lg hover:bg-slate-300">
+          <Link href="/dashboard"
+            className="bg-slate-800 hover:bg-slate-700 text-slate-200 px-6 py-2.5 rounded-lg font-semibold transition-colors">
             View Dashboard
           </Link>
         </div>
@@ -55,13 +57,13 @@ function RFQForm() {
   }
 
   return (
-    <div className="bg-white rounded-xl shadow p-8 max-w-2xl">
+    <div className="bg-slate-900 border border-slate-800 rounded-xl p-8 max-w-2xl w-full">
       <div className="mb-6">
-        <label className="block text-sm font-semibold text-slate-700 mb-2">Customer</label>
+        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Customer</label>
         <select
           value={form.customer_id}
           onChange={e => setForm({ ...form, customer_id: e.target.value })}
-          className="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="">Select a customer...</option>
           {customers.map(c => (
             <option key={c.address_id} value={c.address_id}>{c.address_name}</option>
@@ -70,11 +72,11 @@ function RFQForm() {
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm font-semibold text-slate-700 mb-2">Part / Item</label>
+        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Part / Item</label>
         <select
           value={form.item_id}
           onChange={e => setForm({ ...form, item_id: e.target.value })}
-          className="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          className="w-full bg-slate-800 border border-slate-700 text-white rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
           <option value="">Select a part...</option>
           {items.map(i => (
             <option key={i.item_id} value={i.item_id}>{i.item_name} — {i.description}</option>
@@ -83,31 +85,31 @@ function RFQForm() {
       </div>
 
       <div className="mb-6">
-        <label className="block text-sm font-semibold text-slate-700 mb-2">Quantity</label>
+        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Quantity</label>
         <input
           type="number"
           value={form.quantity}
           onChange={e => setForm({ ...form, quantity: e.target.value })}
           placeholder="Enter quantity..."
-          className="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <div className="mb-8">
-        <label className="block text-sm font-semibold text-slate-700 mb-2">Notes</label>
+        <label className="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Notes</label>
         <textarea
           value={form.notes}
           onChange={e => setForm({ ...form, notes: e.target.value })}
           placeholder="Any additional requirements or notes..."
           rows={3}
-          className="w-full border border-slate-300 rounded-lg px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="w-full bg-slate-800 border border-slate-700 text-white placeholder-slate-500 rounded-lg px-4 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
 
       <button
         onClick={handleSubmit}
         disabled={submitting || !form.customer_id || !form.item_id || !form.quantity}
-        className="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed">
+        className="w-full bg-blue-600 hover:bg-blue-500 text-white py-3 rounded-lg font-semibold transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
         {submitting ? 'Submitting...' : 'Submit RFQ'}
       </button>
     </div>
@@ -116,22 +118,28 @@ function RFQForm() {
 
 export default function RFQPage() {
   return (
-    <main className="min-h-screen bg-gray-50">
-      <header className="bg-slate-900 text-white px-8 py-4 flex items-center justify-between">
+    <main className="min-h-screen bg-slate-950 text-white">
+      <header className="border-b border-slate-800 px-8 py-4 flex items-center justify-between">
         <div>
-          <h1 className="text-xl font-bold">JDE Data Platform</h1>
-          <p className="text-slate-400 text-sm">RFQ Intelligence Portal</p>
+          <Link href="/">
+            <h1 className="text-xl font-bold text-white hover:text-blue-400 transition-colors">JDE Data Platform</h1>
+          </Link>
+          <p className="text-slate-500 text-sm">RFQ Intelligence Portal</p>
         </div>
         <nav className="flex gap-6 text-sm">
-          <Link href="/rfq" className="hover:text-blue-400">Submit RFQ</Link>
-          <Link href="/dashboard" className="hover:text-blue-400">Dashboard</Link>
-          <Link href="/customers" className="hover:text-blue-400">Customers</Link>
+          <Link href="/statusboard" className="text-slate-400 hover:text-blue-400">Statusboard</Link>
+          <Link href="/dashboard" className="text-slate-400 hover:text-blue-400">Dashboard</Link>
+          <Link href="/customers" className="text-slate-400 hover:text-blue-400">Customers</Link>
+          <Link href="/rfq" className="text-blue-400 font-semibold">Submit RFQ</Link>
         </nav>
       </header>
 
-      <div className="max-w-6xl mx-auto px-8 py-10">
-        <h2 className="text-2xl font-bold text-slate-800 mb-6">Submit RFQ</h2>
-        <Suspense fallback={<div>Loading...</div>}>
+      <div className="max-w-7xl mx-auto px-8 py-8">
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-white">Submit RFQ</h2>
+          <p className="text-slate-500 text-sm mt-1">Select a customer and part to route your request for quotation</p>
+        </div>
+        <Suspense fallback={<div className="text-slate-500">Loading...</div>}>
           <RFQForm />
         </Suspense>
       </div>
