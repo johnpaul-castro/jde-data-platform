@@ -7,7 +7,7 @@ export default function Architecture() {
           <p className="text-slate-400">A layered data platform built on open-source tools — no vendor lock-in.</p>
         </div>
 
-        <div className="grid grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
           <div className="bg-amber-950/40 border border-amber-800/50 rounded-2xl p-6">
             <div className="w-10 h-10 bg-amber-600 rounded-xl flex items-center justify-center text-xl mb-4">🥉</div>
             <h3 className="text-lg font-bold text-amber-400 mb-2">Bronze Layer</h3>
@@ -67,7 +67,7 @@ export default function Architecture() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
             <h4 className="font-bold text-white mb-3">Scheduling</h4>
             <p className="text-slate-400 text-sm">Apache Airflow orchestrates the full pipeline nightly (Mon–Sat at 2AM) and a full refresh every Sunday. Each layer only runs if the previous succeeds.</p>

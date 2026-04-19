@@ -61,7 +61,7 @@ export default function Statusboard() {
           <span className="text-xs bg-green-900 text-green-400 px-3 py-1 rounded-full border border-green-800">● Live</span>
         </div>
 
-        <div className="grid grid-cols-4 gap-4 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
             { label: "Total Revenue", value: fmtFull(sales.reduce((a,r)=>a+r.revenue,0)), sub: "Top 10 customers", color: "border-t-blue-500" },
             { label: "Total AR Open", value: fmtFull(arAging.reduce((a,r)=>a+r.open,0)), sub: "Across all customers", color: "border-t-green-500" },
@@ -76,7 +76,7 @@ export default function Statusboard() {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-6 mb-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
           <div className="bg-slate-900 rounded-xl border border-slate-800 p-6">
             <h3 className="font-bold text-white mb-4">Top 10 Customers by Revenue</h3>
             <ResponsiveContainer width="100%" height={280}>
@@ -108,7 +108,7 @@ export default function Statusboard() {
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-slate-900 rounded-xl border border-slate-800 p-6">
             <h3 className="font-bold text-white mb-4">Inventory — On Hand vs On Order</h3>
             <ResponsiveContainer width="100%" height={280}>

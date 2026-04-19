@@ -59,7 +59,7 @@ export default function Inventory() {
       </div>
 
       {!loading && (
-        <div className="grid grid-cols-3 gap-4 mb-8">
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8">
           <div className="bg-slate-900 rounded-xl p-5 border border-slate-800">
             <p className="text-slate-500 text-xs uppercase tracking-widest mb-2">Total Inventory Value</p>
             <p className="text-3xl font-bold text-white">{fmt(totalValue)}</p>

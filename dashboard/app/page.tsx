@@ -72,7 +72,7 @@ export default function Home() {
           Built by <a href="mailto:johnpaulcastro@gmail.com" className="text-blue-400 hover:text-blue-300">JP Castro</a> · Senior Data Architect · <a href="mailto:johnpaulcastro@gmail.com" className="text-blue-400 hover:text-blue-300">johnpaulcastro@gmail.com</a>
         </p>
 
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {cards.map((card) => (
             <Link key={card.label} href={card.href}
               className={"bg-slate-900 border border-slate-800 rounded-xl p-6 transition-all group relative " + card.color + " hover:bg-slate-800" + (card.badge ? " cursor-default" : "")}>

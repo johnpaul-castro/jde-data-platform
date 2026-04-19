@@ -39,7 +39,7 @@ export default function Resume() {
         {/* Skills */}
         <div className="mb-10">
           <h2 className="text-blue-400 text-xs uppercase tracking-widest font-semibold mb-4">Core Competencies</h2>
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
               <p className="text-slate-400 text-xs uppercase tracking-wide mb-3">Data Architecture</p>
               <div className="flex flex-wrap gap-2">

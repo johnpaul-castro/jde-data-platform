@@ -90,7 +90,7 @@ export default function OpenSourceStack() {
         </div>
 
         {/* Tool cards */}
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {tools.map((tool) => (
             <div key={tool.name} className={"border rounded-xl p-6 " + tool.color}>
               <div className="flex items-start justify-between mb-3">
