@@ -96,8 +96,8 @@ export default function ReceivingStatusBoard() {
             </button>
           )}
         </div>
-        <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+        <div className="overflow-x-auto -mx-4 md:mx-0">
+          <table className="w-full text-sm min-w-[600px]">
             <thead>
               <tr className="border-b border-zinc-800 text-zinc-500 text-xs uppercase tracking-wide">
                 <th className="px-4 py-3 text-left">Order</th>
