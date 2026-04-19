@@ -86,7 +86,7 @@ export default function Resume() {
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <h3 className="font-bold text-white">Data Architect</h3>
-                  <p className="text-blue-400 text-sm">Wesco Aircraft / Incora</p>
+                  <p className="text-blue-400 text-sm">Incora (formerly Wesco Aircraft) · Valencia, CA</p>
                 </div>
                 <span className="text-slate-500 text-sm">Previous</span>
               </div>
