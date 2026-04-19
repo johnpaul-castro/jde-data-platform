@@ -12,7 +12,7 @@ export default function Home() {
           <Link href="/statusboard" className="text-slate-400 hover:text-blue-400">Statusboard</Link>
           <Link href="/dashboard" className="text-slate-400 hover:text-blue-400">Dashboard</Link>
           <Link href="/customers" className="text-slate-400 hover:text-blue-400">Customers</Link>
-          <Link href="/rfq" className="text-slate-400 hover:text-blue-400">Submit RFQ</Link>
+          <Link href="/dashboards/sales-overview" className="text-slate-400 hover:text-blue-400">Operations Overview</Link>
         </nav>
       </header>
 
@@ -62,15 +62,15 @@ export default function Home() {
             <p className="text-amber-400 text-xs mt-3 group-hover:text-amber-300">Open Customers →</p>
           </Link>
 
-          <Link href="/rfq"
-            className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-purple-500 hover:bg-slate-800 transition-all group">
-            <div className="flex items-center gap-3 mb-3">
-              <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-sm">📋</div>
-              <h3 className="font-bold text-white text-lg">Submit RFQ</h3>
-            </div>
-            <p className="text-slate-400 text-sm">Submit a new request for quotation. Select customer, part, quantity and route to the right entity.</p>
-            <p className="text-purple-400 text-xs mt-3 group-hover:text-purple-300">Submit RFQ →</p>
-          </Link>
+        <Link href="/dashboards/sales-overview"
+          className="bg-slate-900 border border-slate-800 rounded-xl p-6 hover:border-purple-500 hover:bg-slate-800 transition-all group">
+          <div className="flex items-center gap-3 mb-3">
+            <div className="w-8 h-8 bg-purple-600 rounded-lg flex items-center justify-center text-sm">📊</div>
+            <h3 className="font-bold text-white text-lg">Operations Overview</h3>
+          </div>
+          <p className="text-slate-400 text-sm">Live KPIs across revenue, AR, inventory, and purchasing.</p>
+          <p className="text-purple-400 text-xs mt-3 group-hover:text-purple-300">Open Operations →</p>
+        </Link>
         </div>
 
         <div className="mt-12 pt-8 border-t border-slate-800">
