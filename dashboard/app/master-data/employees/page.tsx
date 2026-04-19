@@ -68,7 +68,7 @@ export default function Employees() {
           {loading ? (
             <div className="text-slate-500 py-20 text-center">Loading employee master...</div>
           ) : (
-            <div className="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
+            <div className="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden overflow-x-auto">
               <table className="w-full text-sm">
                 <thead>
                   <tr className="border-b border-slate-800">
