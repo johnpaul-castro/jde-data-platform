@@ -59,7 +59,7 @@ export default function ARaging() {
         <div className="text-slate-500 py-20 text-center">Loading AR data...</div>
       ) : (
         <div className="bg-slate-900 rounded-xl border border-slate-800 overflow-hidden">
-          </div><div className="overflow-x-auto"><table className="w-full text-sm min-w-[600px]">
+          <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-slate-800">
                 <th className="text-left px-4 py-3 text-slate-400 font-medium text-xs uppercase tracking-wider">Customer</th>
