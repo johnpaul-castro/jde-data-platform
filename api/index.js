@@ -1,16 +1,12 @@
 const fastify = require('fastify')({ logger: true })
 const { Pool } = require('pg')
 
-const db = new Pool({
-  host: 'localhost',
-  port: 5432,
-  database: 'jde_dw',
-  user: 'jp',
-  password: 'jp'
-})
+const db = process.env.DATABASE_URL
+  ? new Pool({ connectionString: process.env.DATABASE_URL, ssl: { rejectUnauthorized: false } })
+  : new Pool({ host: 'localhost', port: 5432, database: 'jde_dw', user: 'jp', password: 'jp' })
 
 fastify.register(require('@fastify/cors'), {
-  origin: ['http://localhost:3001', 'http://localhost:3003', 'http://localhost:3004']
+  origin: ['http://localhost:3001', 'http://localhost:3003', 'http://localhost:3004', /\.railway\.app$/]
 })
 
 // Health check
@@ -88,7 +84,7 @@ fastify.post('/api/rfq', async (req, reply) => {
 
 const start = async () => {
   try {
-    await fastify.listen({ port: 3001, host: '0.0.0.0' })
+    await fastify.listen({ port: parseInt(process.env.PORT) || 3001, host: '0.0.0.0' })
     console.log('API running at http://localhost:3001')
   } catch (err) {
     fastify.log.error(err)
