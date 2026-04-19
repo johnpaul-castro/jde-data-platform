@@ -27,9 +27,9 @@ export default function Home() {
       badge: null,
     },
     {
-      label: "Submit RFQ",
-      desc: "Route requests for quotation to the right team",
-      href: "/rfq",
+      label: "Operations Overview",
+      desc: "Live KPIs across revenue, AR, inventory, and purchasing",
+      href: "/dashboards/sales-overview",
       emoji: "📋",
       color: "hover:border-purple-500",
       badge: null,
