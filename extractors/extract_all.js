@@ -11,14 +11,14 @@ const { Pool } = require('pg');
 const srcConfig = {
   user: 'jde_user',
   password: 'jde_pass',
-  server: '192.168.65.254',
+  server: '172.17.224.1',
   port: 1433,
   database: 'jde_demo',
   options: { trustServerCertificate: true }
 };
 
 const pg = new Pool({
-  host: 'postgres',
+  host: 'localhost',
   port: 5432,
   database: 'jde_dw',
   user: 'jp',

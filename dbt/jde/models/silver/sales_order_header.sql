@@ -17,8 +17,8 @@ SELECT
 
     -- Attributes
     TRIM("SHDCTO")               AS order_type,
-    TRIM("SHSHAN8")::INTEGER     AS sold_to_id,
-    TRIM("SHSDAN8")::INTEGER     AS ship_to_id,
+    TRIM("SHAN8")::INTEGER     AS sold_to_id,
+    TRIM("SHSHAN")::INTEGER     AS ship_to_id,
     TRIM("SHMCU")                AS business_unit,
     TRIM("SHVR01")               AS reference,
     TRIM("SHCR")                 AS currency_code,
@@ -32,7 +32,7 @@ SELECT
 
     -- Amounts
     TRIM("SHCRR")::NUMERIC       AS exchange_rate,
-    TRIM("SHTOTL")::NUMERIC      AS order_total,
+    TRIM("SHOTOT")::NUMERIC      AS order_total,
 
     raw_synced_at
 FROM bronze."F4201"
