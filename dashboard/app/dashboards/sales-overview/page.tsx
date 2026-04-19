@@ -5,7 +5,7 @@ import {
   PieChart, Pie, Cell, Legend
 } from "recharts"
 
-const API = "http://localhost:3001"
+const API = "https://jde-data-platform-production.up.railway.app"
 const COLORS = ["#3b82f6","#60a5fa","#93c5fd","#2563eb","#1d4ed8","#1e40af","#bfdbfe","#dbeafe","#eff6ff","#0f3460"]
 
 export default function Statusboard() {

@@ -3,7 +3,7 @@ import { useEffect, useState, Suspense } from "react"
 import { useSearchParams } from "next/navigation"
 import Link from "next/link"
 
-const API = "http://localhost:3001"
+const API = "https://jde-data-platform-production.up.railway.app"
 
 interface Customer { address_id: number; address_name: string }
 interface Item { item_id: number; item_name: string; description: string }

@@ -23,7 +23,7 @@ interface CustomerDetail {
   country: string
 }
 
-const API = "http://localhost:3001"
+const API = "https://jde-data-platform-production.up.railway.app"
 
 export default function Customers() {
   const [customers, setCustomers] = useState<Customer[]>([])

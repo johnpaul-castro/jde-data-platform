@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 
-const API = "http://localhost:3001";
+const API = "https://jde-data-platform-production.up.railway.app";
 
 type Summary = {
   receiving_status: string;

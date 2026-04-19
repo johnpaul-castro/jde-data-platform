@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react"
 import Link from "next/link"
 
-const API = "http://localhost:3001"
+const API = "https://jde-data-platform-production.up.railway.app"
 
 interface Vendor {
   address_id: number
