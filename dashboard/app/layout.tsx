@@ -7,7 +7,8 @@ const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "JDE Data Platform",
-  description: "JDE Operations Dashboard",
+  description: "JDE Operations Dashboard — Built by JP Castro",
+  icons: { icon: "/favicon.svg" },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
