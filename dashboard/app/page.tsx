@@ -37,10 +37,10 @@ export default function Home() {
     {
       label: "Customer Portal",
       desc: "Self-service portal for customers",
-      href: "#",
+      href: "https://portal.jpcenterprises.com",
       emoji: "🏢",
       color: "hover:border-amber-500",
-      badge: "Coming Soon",
+      badge: null,
     },
     {
       label: "E-Commerce",
