@@ -108,23 +108,24 @@ export default function Home() {
   return (
     <main className="min-h-screen">
       {showBanner && (
-        <div className="bg-amber-500/10 border-b border-amber-500/30 text-amber-200">
-          <div className="max-w-7xl mx-auto px-6 py-2.5 flex items-center justify-between text-sm">
-            <div className="flex items-center gap-3 flex-wrap">
-              <span className="bg-amber-500/20 text-amber-300 text-xs font-semibold px-2 py-0.5 rounded">DEMO</span>
-              <span>No real payments. Test card:</span>
+        <div className="bg-amber-500/15 border-b-2 border-amber-500/50 text-amber-100">
+          <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+            <div className="flex items-center gap-4 flex-wrap">
+              <span className="bg-amber-500 text-slate-950 text-sm font-bold px-3 py-1 rounded tracking-wider">DEMO MODE</span>
+              <span className="text-base font-semibold">⚠ No real payments processed.</span>
+              <span className="text-base">Click to copy test card:</span>
               <button
                 onClick={copyTestCard}
-                className="bg-slate-900/60 hover:bg-slate-900 border border-amber-500/30 px-2 py-0.5 rounded font-mono text-amber-100 transition"
+                className="bg-slate-950 hover:bg-slate-900 border-2 border-amber-500 px-4 py-2 rounded font-mono text-lg font-bold text-amber-300 transition shadow-lg"
                 title="Click to copy"
               >
-                {copied ? '✓ Copied — paste into Stripe' : `${TEST_CARD}  📋`}
+                {copied ? '✓ COPIED — paste into Stripe' : `${TEST_CARD}  📋`}
               </button>
-              <span className="text-xs text-amber-300/70">· any future date · any CVC · any ZIP</span>
+              <span className="text-sm text-amber-200/80">any future date · any CVC · any ZIP</span>
             </div>
             <button
               onClick={() => setShowBanner(false)}
-              className="text-amber-300 hover:text-amber-100 text-lg leading-none ml-4"
+              className="text-amber-300 hover:text-amber-100 text-2xl leading-none ml-4"
               aria-label="Dismiss"
             >
               ×

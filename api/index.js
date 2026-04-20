@@ -259,9 +259,15 @@ fastify.get('/api/customers/:id/sales', async (req, reply) => {
 fastify.get('/api/customers/:id/orders/:order_id', async (req, reply) => {
   const { id, order_id } = req.params
   const customerRes = await db.query(`
-    SELECT a.address_id, a.address_name, a.address_line_1, a.address_line_2,
-      a.city, a.state, a.zip, a.country, a.phone
-    FROM silver.address_book a WHERE a.address_id = $1
+    SELECT
+      ab.address_id, ab.address_name,
+      abd.address_line_1, abd.address_line_2,
+      abd.city, abd.state, abd.zip_code AS zip,
+      abd.phone
+    FROM silver.address_book ab
+    LEFT JOIN silver.address_by_date abd ON ab.address_id = abd.address_id
+    WHERE ab.address_id = $1
+    LIMIT 1
   `, [id])
   const headerRes = await db.query(`
     SELECT order_id, date_transaction, date_requested, sold_to_id
