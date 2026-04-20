@@ -108,6 +108,42 @@ export default function OpenSourceStack() {
           ))}
         </div>
 
+        {/* Integrated services */}
+        <div className="mt-10">
+          <div className="mb-5">
+            <h2 className="text-2xl font-bold text-slate-200 mb-1">Integrated Services</h2>
+            <p className="text-slate-500 text-sm">Managed SaaS used for auth and payments — the only non-open-source pieces in the stack.</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="border rounded-xl p-6 border-violet-500/30 bg-violet-950/20">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="font-bold text-white text-lg">Clerk</h3>
+                <span className="text-xs px-2 py-1 rounded-full font-medium bg-violet-900/50 text-violet-300">Authentication</span>
+              </div>
+              <p className="text-slate-400 text-sm mb-3">Drop-in authentication and user management for Next.js. Handles sign-in, sign-up, session management, and MFA out of the box.</p>
+              <p className="text-slate-300 text-xs mb-4 italic">&quot;Gates the customer portal and shop — scoped sessions tie each user to their JDE customer_id.&quot;</p>
+              <div className="flex flex-wrap gap-1.5">
+                {["Next.js middleware","OAuth-ready","Session management","Dark-themed UI"].map(f => (
+                  <span key={f} className="bg-slate-800/50 text-slate-400 text-xs px-2 py-0.5 rounded">{f}</span>
+                ))}
+              </div>
+            </div>
+            <div className="border rounded-xl p-6 border-indigo-500/30 bg-indigo-950/20">
+              <div className="flex items-start justify-between mb-3">
+                <h3 className="font-bold text-white text-lg">Stripe</h3>
+                <span className="text-xs px-2 py-1 rounded-full font-medium bg-indigo-900/50 text-indigo-300">Payments</span>
+              </div>
+              <p className="text-slate-400 text-sm mb-3">Hosted checkout and payments infrastructure. PCI-compliant card processing with webhooks for order state.</p>
+              <p className="text-slate-300 text-xs mb-4 italic">&quot;Powers the e-commerce shop — Checkout Sessions land back in the app schema for order tracking and webhook replay.&quot;</p>
+              <div className="flex flex-wrap gap-1.5">
+                {["Stripe Checkout","Webhook idempotency","app.checkout_session","Test mode sandbox"].map(f => (
+                  <span key={f} className="bg-slate-800/50 text-slate-400 text-xs px-2 py-0.5 rounded">{f}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="mt-10 pt-8 border-t border-slate-800 text-center">
           <p className="text-slate-500 text-sm">Built by <a href="mailto:johnpaulcastro@gmail.com" className="text-blue-400 hover:text-blue-300">JP Castro</a> · johnpaulcastro@gmail.com</p>
         </div>

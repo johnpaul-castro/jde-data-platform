@@ -76,7 +76,7 @@ export default function Resume() {
               </div>
               <p className="text-slate-400 text-xs uppercase tracking-wide mb-3">Software Development</p>
               <div className="flex flex-wrap gap-2 mb-4">
-                {["Python","JavaScript","Node.js","React","Next.js","C#",".NET","HTML/CSS"].map(s => (
+                {["Python","JavaScript","Node.js","React","Next.js","Clerk","Stripe","C#",".NET","HTML/CSS"].map(s => (
                   <span key={s} className="bg-slate-700/50 border border-slate-600/50 text-slate-300 text-xs px-3 py-1 rounded-full">{s}</span>
                 ))}
               </div>
