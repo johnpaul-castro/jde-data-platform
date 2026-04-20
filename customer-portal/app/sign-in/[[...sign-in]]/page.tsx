@@ -16,7 +16,7 @@ export default function SignInPage() {
               <p className="text-white text-sm font-medium">Bell Textron</p>
               <p className="text-slate-400 text-xs">belltextron@demo.com</p>
             </div>
-            <p className="text-slate-400 text-xs font-mono">Demo1234!</p>
+            <p className="text-slate-400 text-xs font-mono">D3mo1234!</p>
           </div>
           <div className="border-t border-slate-800"></div>
           <div className="flex items-center justify-between">
@@ -24,7 +24,7 @@ export default function SignInPage() {
               <p className="text-white text-sm font-medium">SpaceX</p>
               <p className="text-slate-400 text-xs">spacex@demo.com</p>
             </div>
-            <p className="text-slate-400 text-xs font-mono">Demo1234!</p>
+            <p className="text-slate-400 text-xs font-mono">D3mo1234!</p>
           </div>
         </div>
       </div>
