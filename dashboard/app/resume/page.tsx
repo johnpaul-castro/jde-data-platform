@@ -12,7 +12,7 @@ export default function Resume() {
               <span>📞 (818) 943-5159</span>
               <a href="mailto:johnpaulcastro@gmail.com" className="hover:text-blue-400 transition-colors">✉ johnpaulcastro@gmail.com</a>
               <a href="https://linkedin.com/in/johnpaul-castro" className="hover:text-blue-400 transition-colors">🔗 linkedin.com/in/johnpaul-castro</a>
-              <span>📍 Cleveland, Tennessee</span>
+              <span>📍 Cleveland, TN · Open to remote (US)</span>
             </div>
           </div>
           <div className="text-right">
