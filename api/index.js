@@ -6,7 +6,8 @@ const db = process.env.DATABASE_URL
   : new Pool({ host: 'localhost', port: 5432, database: 'jde_dw', user: 'jp', password: 'jp' })
 
 fastify.register(require('@fastify/cors'), {
-  origin: ['http://localhost:3001', 'http://localhost:3003', 'http://localhost:3004', /\.railway\.app$/]
+  origin: ['http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003', 'https://www.jpcenterprises.com', 'https://portal.jpcenterprises.com'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE']
 })
 
 // Health check
@@ -277,7 +278,8 @@ fastify.get('/api/customers/:id', async (req, reply) => {
 // Get sales detail for a specific customer
 fastify.get('/api/customers/:id/sales', async (req, reply) => {
   const { id } = req.params
-  const result = await db.query(`
+  const { search } = req.query
+  let query = `
     SELECT 
       h.order_id,
       h.date_transaction,
@@ -288,10 +290,38 @@ fastify.get('/api/customers/:id/sales', async (req, reply) => {
     FROM silver.sales_order_header h
     JOIN silver.sales_order_detail d ON h.order_id = d.order_id
     WHERE h.sold_to_id = $1
-    GROUP BY h.order_id, h.date_transaction, h.date_requested
-    ORDER BY h.date_transaction DESC
-    LIMIT 10
-  `, [id])
+  `
+  const params = [id]
+  if (search) {
+    query += ` AND CAST(h.order_id AS TEXT) ILIKE $2`
+    params.push(`%${search}%`)
+  }
+  query += ` GROUP BY h.order_id, h.date_transaction, h.date_requested
+    ORDER BY h.date_transaction DESC`
+  const result = await db.query(query, params)
+  return result.rows
+})
+
+fastify.get('/api/customers/:id/orders/:order_id', async (req, reply) => {
+  const { id, order_id } = req.params
+  const result = await db.query(`
+    SELECT
+      d.line_number,
+      d.item_id,
+      d.item_number,
+      d.item_description,
+      d.quantity_ordered,
+      d.quantity_shipped,
+      d.unit_of_measure,
+      d.unit_price,
+      d.extended_amount,
+      d.next_status,
+      d.last_status
+    FROM silver.sales_order_detail d
+    JOIN silver.sales_order_header h ON d.order_id = h.order_id
+    WHERE h.sold_to_id = $1 AND d.order_id = $2
+    ORDER BY d.line_number
+  `, [id, order_id])
   return result.rows
 })
 
