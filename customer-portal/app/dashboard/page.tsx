@@ -71,7 +71,7 @@ export default function DashboardPage() {
           <h1 className="text-xl font-bold text-white">JDE Customer Portal</h1>
           <p className="text-slate-500 text-sm">Welcome, {user?.firstName} — Customer #{customerId}</p>
         </div>
-        <UserButton afterSignOutUrl="/sign-in" />
+        <UserButton signOutUrl="/sign-in" />
       </header>
 
       <div className="max-w-6xl mx-auto px-8 py-10">
