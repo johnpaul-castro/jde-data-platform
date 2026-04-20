@@ -1,6 +1,6 @@
 'use client'
 
-import { useUser, UserButton, SignOutButton } from '@clerk/nextjs'
+import { useUser, UserButton } from '@clerk/nextjs'
 import { useEffect, useState } from 'react'
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001'
@@ -12,6 +12,7 @@ export default function DashboardPage() {
   const [search, setSearch] = useState('')
   const [selectedOrder, setSelectedOrder] = useState<any>(null)
   const [orderLines, setOrderLines] = useState<any[]>([])
+  const [orderDetail, setOrderDetail] = useState<any>(null)
   const [loadingLines, setLoadingLines] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -36,9 +37,16 @@ export default function DashboardPage() {
     try {
       const res = await fetch(`${API_URL}/api/customers/${customerId}/orders/${order.order_id}`)
       const data = await res.json()
-      setOrderLines(data)
+      setOrderLines(data.lines || [])
+      setOrderDetail(data)
     } catch { setOrderLines([]) }
     setLoadingLines(false)
+  }
+
+  const handleDownloadPDF = async () => {
+    if (!orderDetail) return
+    const { downloadPackingSlip } = await import('../components/PackingSlipPDF')
+    await downloadPackingSlip(orderDetail, orderDetail.customer)
   }
 
   if (!isLoaded || loading) return (
@@ -79,8 +87,15 @@ export default function DashboardPage() {
                     Requested: {new Date(selectedOrder.date_requested).toLocaleDateString()}
                   </p>
                 </div>
-                <button onClick={() => setSelectedOrder(null)}
-                  className="text-slate-400 hover:text-white text-2xl leading-none">×</button>
+                <div className="flex items-center gap-3">
+                  <button
+                    onClick={handleDownloadPDF}
+                    className="bg-blue-600 hover:bg-blue-500 text-white text-sm px-4 py-2 rounded-lg transition-colors">
+                    ⬇ Download Packing Slip
+                  </button>
+                  <button onClick={() => setSelectedOrder(null)}
+                    className="text-slate-400 hover:text-white text-2xl leading-none">×</button>
+                </div>
               </div>
               <div className="p-6">
                 {loadingLines ? (
@@ -94,7 +109,7 @@ export default function DashboardPage() {
                         <th className="text-left py-3 text-slate-400 font-medium">Line</th>
                         <th className="text-left py-3 text-slate-400 font-medium">Item ID</th>
                         <th className="text-left py-3 text-slate-400 font-medium">Description</th>
-                        <th className="text-left py-3 text-slate-400 font-medium">Status</th>                        
+                        <th className="text-left py-3 text-slate-400 font-medium">Status</th>
                         <th className="text-right py-3 text-slate-400 font-medium">Qty Ordered</th>
                         <th className="text-right py-3 text-slate-400 font-medium">Qty Shipped</th>
                         <th className="text-right py-3 text-slate-400 font-medium">Unit Price</th>
@@ -107,7 +122,7 @@ export default function DashboardPage() {
                           <td className="py-3 text-slate-300">{line.line_number}</td>
                           <td className="py-3 text-blue-400 font-mono">{line.item_id}</td>
                           <td className="py-3 text-slate-300">{line.item_description}</td>
-                          <td className="py-3 text-slate-400">{line.next_status}</td>                          
+                          <td className="py-3 text-slate-400">{line.next_status}</td>
                           <td className="py-3 text-slate-300 text-right">{Number(line.quantity_ordered).toLocaleString()}</td>
                           <td className="py-3 text-slate-300 text-right">{Number(line.quantity_shipped).toLocaleString()}</td>
                           <td className="py-3 text-slate-300 text-right">${Number(line.unit_price).toFixed(2)}</td>

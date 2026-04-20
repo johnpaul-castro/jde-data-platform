@@ -304,25 +304,39 @@ fastify.get('/api/customers/:id/sales', async (req, reply) => {
 
 fastify.get('/api/customers/:id/orders/:order_id', async (req, reply) => {
   const { id, order_id } = req.params
-  const result = await db.query(`
-    SELECT
-      d.line_number,
-      d.item_id,
-      d.item_number,
-      d.item_description,
-      d.quantity_ordered,
-      d.quantity_shipped,
-      d.unit_of_measure,
-      d.unit_price,
-      d.extended_amount,
-      d.next_status,
-      d.last_status
-    FROM silver.sales_order_detail d
-    JOIN silver.sales_order_header h ON d.order_id = h.order_id
-    WHERE h.sold_to_id = $1 AND d.order_id = $2
-    ORDER BY d.line_number
-  `, [id, order_id])
-  return result.rows
+
+  const customerRes = await db.query(`
+    SELECT 
+      a.address_id, a.address_name, a.address_line_1, a.address_line_2,
+      a.city, a.state, a.zip, a.country, a.phone
+    FROM silver.address_book a
+    WHERE a.address_id = $1
+  `, [id])
+
+  const headerRes = await db.query(`
+    SELECT order_id, date_transaction, date_requested, sold_to_id
+    FROM silver.sales_order_header
+    WHERE order_id = $1
+  `, [order_id])
+
+  const linesRes = await db.query(`
+      SELECT
+        d.line_number, d.item_id, d.item_number,
+        COALESCE(i.item_description, d.item_description) AS item_description,
+        COALESCE(i.item_description_2, '') AS item_description_2,
+        d.quantity_ordered, d.quantity_shipped, d.unit_of_measure,
+        d.unit_price, d.extended_amount, d.next_status, d.last_status
+      FROM silver.sales_order_detail d
+      LEFT JOIN silver.item_master i ON d.item_id = i.item_id
+      WHERE d.order_id = $1
+      ORDER BY d.line_number
+    `, [order_id])
+
+  return {
+    customer: customerRes.rows[0] || {},
+    header: headerRes.rows[0] || {},
+    lines: linesRes.rows
+  }
 })
 
 // Get purchasing by vendor from Gold

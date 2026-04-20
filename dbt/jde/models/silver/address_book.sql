@@ -29,10 +29,25 @@ deduped AS (
             ORDER BY date_updated DESC NULLS LAST, raw_synced_at DESC
         ) AS rn
     FROM source
+),
+addresses AS (
+    SELECT
+        TRIM("ALAN8")::INTEGER       AS address_id,
+        TRIM("ALADD1")               AS address_line_1,
+        TRIM("ALADD2")               AS address_line_2,
+        TRIM("ALCTY1")               AS city,
+        TRIM("ALADDS")               AS state,
+        TRIM("ALADDZ")               AS zip,
+        TRIM("ALCTRY")               AS country,
+        TRIM("ALPH1")                AS phone
+    FROM bronze."F0116"
+    WHERE "ALAN8" IS NOT NULL
 )
 SELECT
-    address_id, address_key, address_type, address_name,
-    description, tax_id, sic_code, credit_message,
-    updated_by, date_updated, raw_synced_at
-FROM deduped
-WHERE rn = 1
+    d.address_id, d.address_key, d.address_type, d.address_name,
+    d.description, d.tax_id, d.sic_code, d.credit_message,
+    d.updated_by, d.date_updated, d.raw_synced_at,
+    a.address_line_1, a.address_line_2, a.city, a.state, a.zip, a.country, a.phone
+FROM deduped d
+LEFT JOIN addresses a ON d.address_id = a.address_id
+WHERE d.rn = 1
