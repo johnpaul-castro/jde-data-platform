@@ -45,10 +45,10 @@ export default function Home() {
     {
       label: "E-Commerce",
       desc: "Online ordering and catalog",
-      href: "#",
+      href: "https://shop.jpcenterprises.com",
       emoji: "🛒",
       color: "hover:border-rose-500",
-      badge: "Coming Soon",
+      badge: null,
     },
   ];
 
