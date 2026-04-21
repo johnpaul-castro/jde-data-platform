@@ -72,6 +72,51 @@ export default function Home() {
           Built by <a href="mailto:johnpaulcastro@gmail.com" className="text-blue-400 hover:text-blue-300">JP Castro</a> · Senior Data Architect · <a href="mailto:johnpaulcastro@gmail.com" className="text-blue-400 hover:text-blue-300">johnpaulcastro@gmail.com</a>
         </p>
 
+                {/* What is this? */}
+        <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 mb-6">
+          <h3 className="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">What is this?</h3>
+          <p className="text-slate-300 text-base leading-relaxed mb-3">
+            A live, working demo of a modern data platform — the kind of system I design and build for companies that have critical data locked in legacy ERP systems.
+          </p>
+          <p className="text-slate-400 text-sm leading-relaxed">
+            This one pulls data from a simulated JD Edwards ERP, transforms it through a three-layer architecture (raw → cleaned → business-ready), and serves it to live dashboards, a customer self-service portal, and an e-commerce storefront. Everything you see is running in production on open-source tools.
+          </p>
+        </div>
+
+        {/* Terminology */}
+        <details className="bg-slate-900/40 border border-slate-800 rounded-xl p-5 mb-12 group">
+          <summary className="cursor-pointer text-slate-300 font-medium text-sm hover:text-white list-none flex items-center justify-between">
+            <span>📖 Quick terminology (if you&apos;re new to modern data stacks)</span>
+            <span className="text-slate-500 group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
+            <div>
+              <span className="text-blue-400 font-semibold">ERP / JD Edwards</span>
+              <p className="text-slate-400 mt-0.5">Enterprise software companies use to run operations — sales orders, inventory, purchasing, AR/AP. JD Edwards (JDE) is Oracle&apos;s ERP for mid-to-large manufacturers and distributors.</p>
+            </div>
+            <div>
+              <span className="text-blue-400 font-semibold">Medallion Architecture</span>
+              <p className="text-slate-400 mt-0.5">A three-layer pattern for cleaning and organizing data: <strong>Bronze</strong> (raw copy from source), <strong>Silver</strong> (cleaned and typed), <strong>Gold</strong> (business-ready aggregations).</p>
+            </div>
+            <div>
+              <span className="text-blue-400 font-semibold">dbt (data build tool)</span>
+              <p className="text-slate-400 mt-0.5">Open-source tool that transforms raw data into analytics-ready tables using SQL and version control. Runs the Silver and Gold layers.</p>
+            </div>
+            <div>
+              <span className="text-blue-400 font-semibold">Apache Airflow</span>
+              <p className="text-slate-400 mt-0.5">Open-source workflow scheduler. Runs the full data pipeline on a nightly schedule and handles retries and alerting.</p>
+            </div>
+            <div>
+              <span className="text-blue-400 font-semibold">RFQ</span>
+              <p className="text-slate-400 mt-0.5">Request For Quote — a customer asking for pricing on parts. Distributors deal with these constantly.</p>
+            </div>
+            <div>
+              <span className="text-blue-400 font-semibold">Railway</span>
+              <p className="text-slate-400 mt-0.5">Cloud platform hosting everything you see — the Postgres database, the API, the dashboard, the portal, and the shop.</p>
+            </div>
+          </div>
+        </details>
+
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {cards.map((card) => (
             <Link key={card.label} href={card.href}
