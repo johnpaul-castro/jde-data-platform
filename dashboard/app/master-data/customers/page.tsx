@@ -57,8 +57,8 @@ export default function Customers() {
   return (
     <div>
       {/* Demo data disclaimer */}
-      <div className="bg-amber-500/10 border border-amber-500/30 rounded-lg p-3 mb-6 text-sm text-amber-200 flex items-center gap-3">
-        <span className="bg-amber-500/20 text-amber-300 text-xs font-semibold px-2 py-0.5 rounded shrink-0">DEMO DATA</span>
+      <div className="bg-amber-100 border-2 border-amber-500 rounded-lg p-3 mb-6 text-sm text-amber-900 font-medium flex items-center gap-3 shadow-md">
+        <span className="bg-amber-500 text-slate-950 text-xs font-bold px-2 py-1 rounded tracking-wider shrink-0">DEMO DATA</span>
         <span>Synthetic customer records generated for demonstration. Not real customer data.</span>
       </div>
 

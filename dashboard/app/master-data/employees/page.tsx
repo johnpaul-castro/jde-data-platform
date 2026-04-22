@@ -54,12 +54,12 @@ export default function Employees() {
   return (
     <div>
       {/* Demo data disclaimer */}
-      <div className="bg-amber-500/15 border-2 border-amber-500/50 rounded-lg p-4 mb-6">
+      <div className="bg-amber-100 border-2 border-amber-500 rounded-lg p-4 mb-6 shadow-md">
         <div className="flex items-start gap-3">
           <span className="bg-amber-500 text-slate-950 text-xs font-bold px-2 py-1 rounded tracking-wider shrink-0">DEMO DATA</span>
-          <div className="text-sm text-amber-100">
-            <p className="font-semibold mb-1">⚠ This is synthetic, generated data &mdash; not real employee records.</p>
-            <p className="text-amber-200/90">All names, addresses, and IDs on this page are algorithmically generated for demonstration purposes. No real personal or employment information is displayed.</p>
+          <div className="text-sm text-amber-900">
+            <p className="font-bold mb-1 text-base">⚠ This is synthetic, generated data &mdash; not real employee records.</p>
+            <p>All names, addresses, and IDs on this page are algorithmically generated for demonstration purposes. No real personal or employment information is displayed.</p>
           </div>
         </div>
       </div>
