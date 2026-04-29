@@ -54,6 +54,15 @@ export default function OpenSourceStack() {
       role: "Renders the entire dashboard — statusboards, dashboards, master data, RFQ portal, architecture page, and this page.",
       facts: ["React + TypeScript", "App Router", "Tailwind CSS", "Deployed on Railway"],
     },
+    {
+      name: "Splink",
+      category: "Record Linkage",
+      color: "border-cyan-500/30 bg-cyan-950/20",
+      badge: "bg-cyan-900/50 text-cyan-300",
+      desc: "Open-source Python library for probabilistic record linkage. Uses Fellegi-Sunter models to match records that refer to the same entity across different data sources.",
+      role: "Matches customer records across 5 ERP systems — resolving 82 duplicates from 333 source records into 251 golden entities using Jaro-Winkler similarity, tax ID, and location.",
+      facts: ["Jaro-Winkler similarity", "EM parameter training", "Blocking rules", "DuckDB backend"],
+    },    
   ];
 
   return (
@@ -76,6 +85,8 @@ export default function OpenSourceStack() {
               { label: "Bronze (PostgreSQL)", color: "bg-amber-900/50 text-amber-300 border-amber-800/50" },
               { label: "→", color: "bg-transparent text-slate-500 border-transparent" },
               { label: "dbt Silver", color: "bg-slate-700/50 text-slate-300 border-slate-600/50" },
+              { label: "→", color: "bg-transparent text-slate-500 border-transparent" },
+              { label: "Splink MDM", color: "bg-cyan-900/50 text-cyan-300 border-cyan-800/50" },
               { label: "→", color: "bg-transparent text-slate-500 border-transparent" },
               { label: "dbt Gold", color: "bg-yellow-900/50 text-yellow-300 border-yellow-800/50" },
               { label: "→", color: "bg-transparent text-slate-500 border-transparent" },
