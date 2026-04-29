@@ -78,7 +78,7 @@ export default function Home() {
 
   return (
     <main className="min-h-screen bg-slate-950 text-white">
-      <div className="max-w-5xl mx-auto px-8 py-20">
+      <div className="max-w-5xl mx-auto px-8 py-10">
         <div className="mb-4 flex items-center gap-3">
           <span className="text-xs bg-green-900 text-green-400 px-3 py-1 rounded-full border border-green-800">
             ● Live JDE Data — Gold Layer
@@ -87,7 +87,7 @@ export default function Home() {
         <h2 className="text-5xl font-bold text-white mb-4 leading-tight">
           Unified RFQ<br />Intelligence Platform
         </h2>
-        <p className="text-lg text-slate-400 mb-2 max-w-2xl">
+        <p className="text-lg text-slate-400 mb-2 max-w-4xl">
           Real-time visibility across all entities. Submit RFQs, detect conflicts,
           and route requests to the right team — powered by live JDE data through
           a Bronze / Silver / Gold medallion architecture.
@@ -97,24 +97,30 @@ export default function Home() {
         </p>
 
         {/* What is this? */}
-        <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 mb-6">
-          <h3 className="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">What is this?</h3>
-          <p className="text-slate-300 text-base leading-relaxed mb-3">
-            A live, working demo of a modern data platform — the kind of system I design and build for companies that have critical data locked in legacy ERP systems.
-          </p>
-          <p className="text-slate-400 text-sm leading-relaxed mb-3">
-            This one pulls data from a simulated JD Edwards ERP, transforms it through a three-layer architecture (raw → cleaned → business-ready), and serves it to live dashboards, a customer self-service portal, and an e-commerce storefront. Everything you see is running in production on open-source tools.
-          </p>
-          <p className="text-slate-400 text-sm leading-relaxed">
-            The platform also includes a Master Data Management (MDM) layer that demonstrates what happens when multiple ERP systems coexist across a portfolio of companies. Five separate ERPs — each with their own schemas, naming conventions, and customer records — are extracted, normalized, and then matched using Splink, a probabilistic record linkage engine. The result is a set of golden customer records that unify duplicates like &quot;Boeing Co.&quot;, &quot;THE BOEING COMPANY&quot;, and &quot;Boeing Defence UK Ltd&quot; into a single entity, with consolidated sales visibility across all systems. This is the foundation any RFQ or pricing system would need to sit on top of.
-          </p>
-        </div>
+        <details className="bg-slate-900/60 border border-slate-800 rounded-xl p-5 mb-6 group">
+          <summary className="cursor-pointer text-slate-300 font-medium text-sm hover:text-white list-none flex items-center justify-between">
+            <span className="text-blue-400 font-semibold text-sm uppercase tracking-widest">What is this?</span>
+            <span className="text-slate-400 text-2xl group-open:rotate-180 transition-transform">▾</span>
+          </summary>
+          <div className="mt-4">
+            <p className="text-slate-300 text-base leading-relaxed mb-3">
+              A live, working demo of a modern data platform — the kind of system I design and build for companies that have critical data locked in legacy ERP systems.
+            </p>
+            <p className="text-slate-400 text-sm leading-relaxed mb-3">
+              This one pulls data from a simulated JD Edwards ERP, transforms it through a three-layer architecture (raw → cleaned → business-ready), and serves it to live dashboards, a customer self-service portal, and an e-commerce storefront. Everything you see is running in production on open-source tools.
+            </p>
+            <p className="text-slate-400 text-sm leading-relaxed">
+              The platform also includes a Master Data Management (MDM) layer that demonstrates what happens when multiple ERP systems coexist across a portfolio of companies. Five separate ERPs — each with their own schemas, naming conventions, and customer records — are extracted, normalized, and then matched using Splink, a probabilistic record linkage engine. The result is a set of golden customer records that unify duplicates like &quot;Boeing Co.&quot;, &quot;THE BOEING COMPANY&quot;, and &quot;Boeing Defence UK Ltd&quot; into a single entity, with consolidated sales visibility across all systems. This is the foundation any RFQ or pricing system would need to sit on top of.
+            </p>
+          </div>
+        </details>
+
 
         {/* Terminology */}
         <details className="bg-slate-900/40 border border-slate-800 rounded-xl p-5 mb-12 group">
           <summary className="cursor-pointer text-slate-300 font-medium text-sm hover:text-white list-none flex items-center justify-between">
             <span>📖 Quick terminology (if you&apos;re new to modern data stacks)</span>
-            <span className="text-slate-500 group-open:rotate-180 transition-transform">▾</span>
+            <span className="text-slate-400 text-2xl group-open:rotate-180 transition-transform">▾</span>            
           </summary>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
             <div>
