@@ -102,14 +102,17 @@ export default function Resume() {
                   <h3 className="font-bold text-white">Senior Data Architect — Independent / Consulting</h3>
                   <p className="text-blue-400 text-sm">Self-Employed</p>
                 </div>
-                <span className="text-slate-500 text-sm">2024 — Present</span>
+                <span className="text-slate-500 text-sm">2026 — Present</span>
               </div>
               <ul className="text-slate-400 text-sm space-y-1.5">
                 <li>→ Designed and built full medallion architecture platform for JDE Edwards data — Bronze extraction, Silver transformation, Gold aggregation</li>
                 <li>→ Built Node.js extractors pulling from JDE SQL Server into PostgreSQL via Apache Airflow orchestration</li>
                 <li>→ Implemented dbt Core models with proper naming standards, surrogate keys, and Kimball dimensional modeling</li>
+                <li>→ Built an MDM (Master Data Management) layer that unifies customer records across 5 separate ERP systems using Splink probabilistic record linkage — resolving 82 duplicates from 333 source records into 251 golden customer entities</li>
+                <li>→ Designed the full MDM pipeline: Node.js extraction → PostgreSQL Bronze → dbt Silver normalization → Python/Splink matching → golden record output with cross-reference mapping and consolidated sales visibility</li>
                 <li>→ Deployed full stack to Railway cloud: Fastify API + Next.js dashboard + PostgreSQL</li>
               </ul>
+
             </div>
 
             <div className="relative pl-6 border-l border-slate-700">
@@ -216,7 +219,7 @@ export default function Resume() {
         <div className="mb-10">
           <h2 className="text-blue-400 text-xs uppercase tracking-widest font-semibold mb-4">Certifications & Training</h2>
           <ul className="text-slate-400 text-sm space-y-2">
-            <li>→ <span className="text-slate-300">dbt Fundamentals Certification</span> — dbt Labs <span className="text-slate-500">(in progress)</span></li>
+            <li>→ <span className="text-slate-300">dbt Fundamentals Certification</span> — dbt Labs <span className="text-slate-500"></span></li>
             <li>→ <span className="text-slate-300">IBM Cognos Data Manager Certification</span></li>
             <li>→ <span className="text-slate-300">Qlik Data Modeling for Qlik Sense</span> — 2021</li>
             <li>→ <span className="text-slate-300">Cognos Report Studio & Data Manager Training</span> — 2013–2015</li>

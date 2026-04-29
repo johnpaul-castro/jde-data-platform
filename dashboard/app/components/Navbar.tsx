@@ -29,6 +29,14 @@ const navItems = [
       { label: "Employees", href: "/master-data/employees" },
     ],
   },
+  {
+    label: "MDM",
+    items: [
+      { label: "Entity Resolution", href: "/mdm" },
+      { label: "Consolidated Sales", href: "/mdm/sales" },      
+      { label: "Architecture", href: "/mdm/architecture" },
+    ],
+  },  
 ];
 
 export default function Navbar() {

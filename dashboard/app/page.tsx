@@ -20,7 +20,7 @@ export default function Home() {
     },
     {
       label: "Open Source Stack",
-      desc: "PostgreSQL · dbt Core · Airflow · Node.js · Next.js",
+      desc: "PostgreSQL · dbt Core · Airflow · Node.js · Next.js · Splink",
       href: "/open-source",
       emoji: "⚙️",
       color: "hover:border-emerald-500",
@@ -50,6 +50,30 @@ export default function Home() {
       color: "hover:border-rose-500",
       badge: null,
     },
+    {
+      label: "MDM Entity Resolution",
+      desc: "Probabilistic customer matching across 5 ERPs using Splink",
+      href: "/mdm",
+      emoji: "🔗",
+      color: "hover:border-teal-500",
+      badge: null,
+    },
+    {
+      label: "MDM Consolidated Sales",
+      desc: "Unified sales view linked to golden customer records",
+      href: "/mdm/sales",
+      emoji: "💰",
+      color: "hover:border-green-500",
+      badge: null,
+    },
+    {
+      label: "MDM Architecture",
+      desc: "Extract → Bronze → Silver → Splink → Golden Record pipeline",
+      href: "/mdm/architecture",
+      emoji: "🧬",
+      color: "hover:border-indigo-500",
+      badge: null,
+    },
   ];
 
   return (
@@ -72,14 +96,17 @@ export default function Home() {
           Built by <a href="mailto:johnpaulcastro@gmail.com" className="text-blue-400 hover:text-blue-300">JP Castro</a> · Senior Data Architect · <a href="mailto:johnpaulcastro@gmail.com" className="text-blue-400 hover:text-blue-300">johnpaulcastro@gmail.com</a>
         </p>
 
-                {/* What is this? */}
+        {/* What is this? */}
         <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 mb-6">
           <h3 className="text-blue-400 font-semibold text-sm uppercase tracking-widest mb-3">What is this?</h3>
           <p className="text-slate-300 text-base leading-relaxed mb-3">
             A live, working demo of a modern data platform — the kind of system I design and build for companies that have critical data locked in legacy ERP systems.
           </p>
-          <p className="text-slate-400 text-sm leading-relaxed">
+          <p className="text-slate-400 text-sm leading-relaxed mb-3">
             This one pulls data from a simulated JD Edwards ERP, transforms it through a three-layer architecture (raw → cleaned → business-ready), and serves it to live dashboards, a customer self-service portal, and an e-commerce storefront. Everything you see is running in production on open-source tools.
+          </p>
+          <p className="text-slate-400 text-sm leading-relaxed">
+            The platform also includes a Master Data Management (MDM) layer that demonstrates what happens when multiple ERP systems coexist across a portfolio of companies. Five separate ERPs — each with their own schemas, naming conventions, and customer records — are extracted, normalized, and then matched using Splink, a probabilistic record linkage engine. The result is a set of golden customer records that unify duplicates like &quot;Boeing Co.&quot;, &quot;THE BOEING COMPANY&quot;, and &quot;Boeing Defence UK Ltd&quot; into a single entity, with consolidated sales visibility across all systems. This is the foundation any RFQ or pricing system would need to sit on top of.
           </p>
         </div>
 
@@ -114,6 +141,14 @@ export default function Home() {
               <span className="text-blue-400 font-semibold">Railway</span>
               <p className="text-slate-400 mt-0.5">Cloud platform hosting everything you see — the Postgres database, the API, the dashboard, the portal, and the shop.</p>
             </div>
+            <div>
+              <span className="text-blue-400 font-semibold">MDM (Master Data Management)</span>
+              <p className="text-slate-400 mt-0.5">The practice of creating a single, trusted view of key business entities (customers, vendors, items) across multiple source systems that may store the same data differently.</p>
+            </div>
+            <div>
+              <span className="text-blue-400 font-semibold">Splink</span>
+              <p className="text-slate-400 mt-0.5">Open-source Python library for probabilistic record linkage. Uses techniques like Jaro-Winkler similarity and Fellegi-Sunter models to match records that refer to the same entity but have different names, formats, or typos.</p>
+            </div>
           </div>
         </details>
 
@@ -139,7 +174,7 @@ export default function Home() {
 
         <div className="mt-12 pt-8 border-t border-slate-800 flex items-center justify-between">
           <p className="text-slate-600 text-xs">
-            Powered by PostgreSQL · dbt Core · Apache Airflow · Node.js · Next.js
+            Powered by PostgreSQL · dbt Core · Apache Airflow · Node.js · Next.js · Splink
           </p>
           <a href="mailto:johnpaulcastro@gmail.com" className="text-slate-500 text-xs hover:text-blue-400 transition-colors">
             johnpaulcastro@gmail.com

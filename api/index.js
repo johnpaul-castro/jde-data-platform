@@ -16,7 +16,7 @@ fastify.addContentTypeParser('application/json', { parseAs: 'buffer' }, (req, bo
 })
 
 fastify.register(require('@fastify/cors'), {
-  origin: ['http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003', 'https://www.jpcenterprises.com', 'https://portal.jpcenterprises.com', 'https://shop.jpcenterprises.com'],
+  origin: ['http://localhost:3000','http://localhost:3001', 'http://localhost:3002', 'http://localhost:3003', 'https://www.jpcenterprises.com', 'https://portal.jpcenterprises.com', 'https://shop.jpcenterprises.com'],
   methods: ['GET', 'POST', 'PUT', 'DELETE']
 })
 
@@ -526,6 +526,139 @@ fastify.post('/api/shop/webhooks/stripe', async (req, reply) => {
   `, [event.id])
 
   return { received: true }
+})
+
+// ─── MDM Endpoints ───────────────────────────────────────────
+
+// Golden records summary
+fastify.get('/api/mdm/golden-customers', async (req, reply) => {
+  const result = await db.query(`
+    SELECT golden_customer_id, golden_name, golden_city, golden_state,
+           golden_postal_code, golden_tax_id, golden_email,
+           primary_source, primary_source_id
+    FROM mdm.customer_golden
+    ORDER BY golden_name
+  `)
+  return result.rows
+})
+
+// Cross-reference: all source records grouped by golden ID
+fastify.get('/api/mdm/customer-xref', async (req, reply) => {
+  const result = await db.query(`
+    SELECT cluster_id, source_system, source_customer_id, customer_name,
+           name_clean, city, state_province, postal_code, tax_id, email
+    FROM mdm.customer_xref
+    ORDER BY cluster_id, source_system
+  `)
+  return result.rows
+})
+
+// Stats for the MDM overview
+fastify.get('/api/mdm/stats', async (req, reply) => {
+  const total = await db.query(`SELECT COUNT(*) AS count FROM mdm.customer_xref`)
+  const golden = await db.query(`SELECT COUNT(*) AS count FROM mdm.customer_golden`)
+  const bySource = await db.query(`
+    SELECT source_system, COUNT(*) AS count
+    FROM mdm.customer_xref
+    GROUP BY source_system
+    ORDER BY source_system
+  `)
+  const duplicates = await db.query(`
+    SELECT cluster_id, COUNT(*) AS match_count
+    FROM mdm.customer_xref
+    GROUP BY cluster_id
+    HAVING COUNT(*) > 1
+    ORDER BY match_count DESC
+    LIMIT 20
+  `)
+  return {
+    total_source_records: parseInt(total.rows[0].count),
+    golden_records: parseInt(golden.rows[0].count),
+    duplicates_resolved: parseInt(total.rows[0].count) - parseInt(golden.rows[0].count),
+    by_source: bySource.rows,
+    top_duplicate_clusters: duplicates.rows
+  }
+})
+
+// Detail for a single golden record
+fastify.get('/api/mdm/golden-customers/:id', async (req, reply) => {
+  const { id } = req.params
+  const golden = await db.query(`
+    SELECT * FROM mdm.customer_golden WHERE golden_customer_id = $1
+  `, [id])
+  const sources = await db.query(`
+    SELECT * FROM mdm.customer_xref WHERE cluster_id = $1 ORDER BY source_system
+  `, [id])
+  return { golden: golden.rows[0] || null, sources: sources.rows }
+})
+
+// Sales aggregated by golden customer (add this with the other MDM endpoints in index.js)
+fastify.get('/api/mdm/golden-sales', async (req, reply) => {
+  const result = await db.query(`
+    WITH all_sales AS (
+      SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp1_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp2_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp3_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp4_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp5_sales
+    )
+    SELECT
+      x.cluster_id,
+      COUNT(DISTINCT s.order_id) AS total_orders,
+      COALESCE(SUM(s.order_amount), 0) AS total_revenue,
+      COUNT(DISTINCT s.source_system) AS erp_count,
+      MIN(s.order_date) AS first_order,
+      MAX(s.order_date) AS last_order
+    FROM mdm.customer_xref x
+    JOIN all_sales s
+      ON x.source_system = s.source_system
+      AND x.source_customer_id = s.source_customer_id
+    GROUP BY x.cluster_id
+    ORDER BY total_revenue DESC
+  `)
+  return result.rows
+})
+
+// MDM Sales Detail — all orders linked to golden customers
+// Add this to api/index.js with the other MDM endpoints
+fastify.get('/api/mdm/sales-detail', async (req, reply) => {
+  const result = await db.query(`
+    WITH all_sales AS (
+      SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp1_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp2_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp3_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp4_sales
+      UNION ALL SELECT source_system, source_customer_id, order_id, order_date, order_amount, currency_code
+      FROM silver_erp.erp5_sales
+    )
+    SELECT
+      s.order_id,
+      s.source_system,
+      s.source_customer_id,
+      s.order_date,
+      s.order_amount,
+      s.currency_code,
+      x.cluster_id AS golden_customer_id,
+      x.customer_name AS source_customer_name,
+      g.golden_name
+    FROM all_sales s
+    JOIN mdm.customer_xref x
+      ON s.source_system = x.source_system
+      AND s.source_customer_id = x.source_customer_id
+    LEFT JOIN mdm.customer_golden g
+      ON x.cluster_id = g.golden_customer_id
+    ORDER BY s.order_date DESC
+  `)
+  return result.rows
 })
 
 const start = async () => {
