@@ -1,21 +1,24 @@
 name: 'jde'
 version: '1.0.0'
 config-version: 2
-
 profile: 'jde'
-
 model-paths: ["models"]
 analysis-paths: ["analyses"]
 test-paths: ["tests"]
 seed-paths: ["seeds"]
 macro-paths: ["macros"]
 snapshot-paths: ["snapshots"]
-
 models:
   jde:
     silver:
       +materialized: table
       +schema: silver
+    silver_erp:
+      +materialized: table
+      +schema: silver_erp
     gold:
       +materialized: table
       +schema: gold
+    mdm:
+      +materialized: table
+      +schema: mdm

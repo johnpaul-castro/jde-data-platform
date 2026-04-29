@@ -1,0 +1,32 @@
+version: 2
+
+sources:
+  - name: bronze_erp1
+    schema: bronze_erp1
+    tables:
+      - name: customer
+      - name: sales
+
+  - name: bronze_erp2
+    schema: bronze_erp2
+    tables:
+      - name: customer
+      - name: sales
+
+  - name: bronze_erp3
+    schema: bronze_erp3
+    tables:
+      - name: customer
+      - name: sales
+
+  - name: bronze_erp4
+    schema: bronze_erp4
+    tables:
+      - name: customer
+      - name: sales
+
+  - name: bronze_erp5
+    schema: bronze_erp5
+    tables:
+      - name: customer
+      - name: sales
