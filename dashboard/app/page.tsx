@@ -11,6 +11,14 @@ export default function Home() {
       badge: null,
     },
     {
+      label: "Databricks Lakehouse",
+      desc: "Lakeflow DLT pipeline, Unity Catalog RBAC, AI/BI dashboards on JDE aerospace data",
+      href: "/databricks",
+      emoji: "🔶",
+      color: "hover:border-orange-500",
+      badge: "NEW",
+    },
+    {
       label: "My Resume",
       desc: "Senior Data Architect — JP Castro",
       href: "/resume",
@@ -115,12 +123,11 @@ export default function Home() {
           </div>
         </details>
 
-
         {/* Terminology */}
         <details className="bg-slate-900/40 border border-slate-800 rounded-xl p-5 mb-12 group">
           <summary className="cursor-pointer text-slate-300 font-medium text-sm hover:text-white list-none flex items-center justify-between">
             <span>📖 Quick terminology (if you&apos;re new to modern data stacks)</span>
-            <span className="text-slate-400 text-2xl group-open:rotate-180 transition-transform">▾</span>            
+            <span className="text-slate-400 text-2xl group-open:rotate-180 transition-transform">▾</span>
           </summary>
           <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-3 text-sm">
             <div>
@@ -161,9 +168,9 @@ export default function Home() {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
           {cards.map((card) => (
             <Link key={card.label} href={card.href}
-              className={"bg-slate-900 border border-slate-800 rounded-xl p-6 transition-all group relative " + card.color + " hover:bg-slate-800" + (card.badge ? " cursor-default" : "")}>
+              className={"bg-slate-900 border border-slate-800 rounded-xl p-6 transition-all group relative " + card.color + " hover:bg-slate-800"}>
               {card.badge && (
-                <span className="absolute top-3 right-3 text-xs bg-slate-700 text-slate-400 px-2 py-0.5 rounded-full">
+                <span className="absolute top-3 right-3 text-xs bg-orange-900 text-orange-300 px-2 py-0.5 rounded-full border border-orange-700">
                   {card.badge}
                 </span>
               )}
