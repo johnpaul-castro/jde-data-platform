@@ -101,17 +101,34 @@ export default function Resume() {
               <div className="flex items-start justify-between mb-2">
                 <div>
                   <h3 className="font-bold text-white">Senior Data Architect — Independent / Consulting</h3>
-                  <p className="text-blue-400 text-sm">Self-Employed</p>
+                  <p className="text-blue-400 text-sm">Self-Employed · Founding Technical Equity Partner (early-stage fintech startup)</p>
                 </div>
                 <span className="text-slate-500 text-sm">2026 — Present</span>
               </div>
+
+              <p className="text-slate-500 text-xs uppercase tracking-wide mt-4 mb-2 font-semibold">Azure Databricks — Lakehouse & Pipeline Engineering</p>
+              <ul className="text-slate-400 text-sm space-y-1.5 mb-4">
+                <li>→ Designed and deployed a 7-layer medallion pipeline on Azure Databricks using Lakeflow Declarative Pipelines (DLT), Unity Catalog governance, and Declarative Automation Bundles (DAB) with full dev/test/prod environment promotion</li>
+                <li>→ Built production data pipelines processing financial accounting data through Bronze ingestion, Silver normalization, and Gold Kimball dimensional models using PySpark, Spark SQL, and the SQL Statement Execution API</li>
+                <li>→ Optimized pipeline runtime to under two minutes; validated zero accounting differences across 223 shared reporting keys between source and lakehouse</li>
+                <li>→ Performed codebase remediation on an inherited pipeline: resolved security issues (plaintext credentials in source control), correctness defects (sign-stripping in transformations, tautological validation checks), and structural gaps (hardcoded catalog names, no environment separation, infinite orchestrator timeouts)</li>
+                <li>→ Resolved persistent ADLS Gen2 / Unity Catalog storage credential binding issues and recovered a catalog accidentally destroyed by a bundle deploy command via deep-clone from production</li>
+                <li>→ Built a Splink probabilistic record linkage demo on Databricks Serverless with DuckDB backend using synthetic aerospace ERP data across five simulated companies</li>
+                <li>→ Created a Python/Jinja2/YAML code generator (sap-medallion-engine) that produces Databricks pipeline code from configuration, encoding Kimball naming standards and current-practice defaults (CLUSTER BY AUTO, Lakeflow DLT, AUTO CDC)</li>
+              </ul>
+
+              <p className="text-slate-500 text-xs uppercase tracking-wide mb-2 font-semibold">JDE Data Platform — Open-Source Medallion Architecture</p>
+              <ul className="text-slate-400 text-sm space-y-1.5 mb-4">
+                <li>→ Designed and built a full medallion architecture platform for JD Edwards aerospace data — Bronze extraction, Silver transformation, Gold aggregation — deployed to Railway cloud with Fastify API, Next.js dashboard, and PostgreSQL</li>
+                <li>→ Built Node.js extractors pulling from JDE SQL Server into PostgreSQL via Apache Airflow orchestration with dbt Core models, surrogate keys, and Kimball dimensional modeling</li>
+                <li>→ Built an MDM layer unifying customer records across 5 separate ERP systems using Splink probabilistic record linkage — resolving 82 duplicates from 333 source records into 251 golden customer entities with cross-reference mapping and consolidated sales visibility</li>
+                <li>→ Delivered a live portfolio site (jpcenterprises.com) with operational dashboards, status boards, a customer self-service portal, and an e-commerce storefront — all powered by live data from the Gold layer</li>
+              </ul>
+
+              <p className="text-slate-500 text-xs uppercase tracking-wide mb-2 font-semibold">AI-Powered Data Engineering</p>
               <ul className="text-slate-400 text-sm space-y-1.5">
-                <li>→ Designed and built full medallion architecture platform for JDE Edwards data — Bronze extraction, Silver transformation, Gold aggregation</li>
-                <li>→ Built Node.js extractors pulling from JDE SQL Server into PostgreSQL via Apache Airflow orchestration</li>
-                <li>→ Implemented dbt Core models with proper naming standards, surrogate keys, and Kimball dimensional modeling</li>
-                <li>→ Built an MDM (Master Data Management) layer that unifies customer records across 5 separate ERP systems using Splink probabilistic record linkage — resolving 82 duplicates from 333 source records into 251 golden customer entities</li>
-                <li>→ Designed the full MDM pipeline: Node.js extraction → PostgreSQL Bronze → dbt Silver normalization → Python/Splink matching → golden record output with cross-reference mapping and consolidated sales visibility</li>
-                <li>→ Deployed full stack to Railway cloud: Fastify API + Next.js dashboard + PostgreSQL</li>
+                <li>→ Built an LLM-powered SEC EDGAR filing analysis pipeline using n8n workflow automation, Claude API, and PostgreSQL — extracts, summarizes, and structures public company filings for automated review</li>
+                <li>→ Designed an SCD Type 2 change detection and alerting system for JDE master data using PostgreSQL triggers, n8n orchestration, and Claude AI for intelligent change summarization</li>
               </ul>
 
             </div>
