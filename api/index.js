@@ -31,6 +31,21 @@ fastify.get('/health', async () => {
 const DATE_ANCHOR = `'2026-04-10'::date`
 const OFFSET = `(CURRENT_DATE - ${DATE_ANCHOR})`
 
+// ── Platform-wide stats for homepage metrics ─────────────────────────────
+fastify.get('/api/platform-stats', async (req, reply) => {
+  const result = await db.query(`
+    SELECT
+      (SELECT COUNT(*) FROM silver.address_book WHERE address_type = 'C') AS total_customers,
+      (SELECT COUNT(*) FROM silver.address_book WHERE address_type = 'V') AS total_vendors,
+      (SELECT COUNT(*) FROM silver.item_master) AS total_items,
+      (SELECT COUNT(*) FROM silver.sales_order_header) AS total_sales_orders,
+      (SELECT COUNT(*) FROM silver.sales_order_detail) AS total_sales_lines,
+      (SELECT COUNT(*) FROM silver.purchase_order_header) AS total_purchase_orders,
+      (SELECT SUM(quantity_on_hand) FROM gold.inventory_status) AS total_units_on_hand
+  `)
+  return result.rows[0]
+})
+
 // Get all customers from Silver
 fastify.get('/api/customers', async (req, reply) => {
   const result = await db.query(`
