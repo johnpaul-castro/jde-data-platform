@@ -321,12 +321,25 @@ fastify.get('/api/debug/customers', async (req, reply) => {
 // ── Status Boards ────────────────────────────────────────────────────────
 fastify.get('/api/statusboard/shipments', async (req, reply) => {
   const result = await db.query(`
+    WITH shifted AS (
+      SELECT *,
+        (CURRENT_DATE - '2026-04-10'::date) AS day_offset
+      FROM gold.shipment_status
+    )
     SELECT order_id, customer_name, item_number, item_description,
       quantity_ordered, quantity_shipped, quantity_remaining,
-      shipment_status, status_color, date_requested, date_promised,
-      days_past_promise, is_overdue
-    FROM gold.shipment_status
-    ORDER BY is_overdue DESC, days_past_promise DESC
+      shipment_status, status_color,
+      (date_requested::date + day_offset)::text  AS date_requested,
+      (date_promised::date  + day_offset)::text  AS date_promised,
+      CURRENT_DATE - (date_promised::date + day_offset) AS days_past_promise,
+      CASE
+        WHEN shipment_status != 'Closed'
+         AND CURRENT_DATE > (date_promised::date + day_offset) THEN true
+        ELSE false
+      END AS is_overdue
+    FROM shifted
+    ORDER BY is_overdue DESC,
+             CURRENT_DATE - (date_promised::date + day_offset) DESC
     LIMIT 200
   `)
   return result.rows
@@ -334,12 +347,20 @@ fastify.get('/api/statusboard/shipments', async (req, reply) => {
 
 fastify.get('/api/statusboard/shipments/summary', async (req, reply) => {
   const result = await db.query(`
+    WITH shifted AS (
+      SELECT *,
+        (CURRENT_DATE - '2026-04-10'::date) AS day_offset
+      FROM gold.shipment_status
+    )
     SELECT shipment_status, status_color, COUNT(*) AS line_count,
       SUM(quantity_ordered) AS total_ordered,
       SUM(quantity_shipped) AS total_shipped,
       SUM(quantity_remaining) AS total_remaining,
-      COUNT(*) FILTER (WHERE is_overdue) AS overdue_count
-    FROM gold.shipment_status
+      COUNT(*) FILTER (WHERE
+        shipment_status != 'Closed'
+        AND CURRENT_DATE > (date_promised::date + day_offset)
+      ) AS overdue_count
+    FROM shifted
     GROUP BY shipment_status, status_color
     ORDER BY shipment_status
   `)
@@ -348,12 +369,25 @@ fastify.get('/api/statusboard/shipments/summary', async (req, reply) => {
 
 fastify.get('/api/statusboard/receiving', async (req, reply) => {
   const result = await db.query(`
+    WITH shifted AS (
+      SELECT *,
+        (CURRENT_DATE - '2026-04-10'::date) AS day_offset
+      FROM gold.receiving_status
+    )
     SELECT order_id, vendor_name, item_number, item_description,
       quantity_received, quantity_put_away, quantity_not_put_away,
-      receiving_status, status_color, date_requested, date_promised,
-      days_past_promise, is_overdue
-    FROM gold.receiving_status
-    ORDER BY is_overdue DESC, days_past_promise DESC
+      receiving_status, status_color,
+      (date_requested::date + day_offset)::text  AS date_requested,
+      (date_promised::date  + day_offset)::text  AS date_promised,
+      CURRENT_DATE - (date_promised::date + day_offset) AS days_past_promise,
+      CASE
+        WHEN receiving_status != 'Closed'
+         AND CURRENT_DATE > (date_promised::date + day_offset) THEN true
+        ELSE false
+      END AS is_overdue
+    FROM shifted
+    ORDER BY is_overdue DESC,
+             CURRENT_DATE - (date_promised::date + day_offset) DESC
     LIMIT 200
   `)
   return result.rows
@@ -361,11 +395,19 @@ fastify.get('/api/statusboard/receiving', async (req, reply) => {
 
 fastify.get('/api/statusboard/receiving/summary', async (req, reply) => {
   const result = await db.query(`
+    WITH shifted AS (
+      SELECT *,
+        (CURRENT_DATE - '2026-04-10'::date) AS day_offset
+      FROM gold.receiving_status
+    )
     SELECT receiving_status, status_color, COUNT(*) AS line_count,
       SUM(quantity_put_away) AS total_put_away,
       SUM(quantity_not_put_away) AS total_not_put_away,
-      COUNT(*) FILTER (WHERE is_overdue) AS overdue_count
-    FROM gold.receiving_status
+      COUNT(*) FILTER (WHERE
+        receiving_status != 'Closed'
+        AND CURRENT_DATE > (date_promised::date + day_offset)
+      ) AS overdue_count
+    FROM shifted
     GROUP BY receiving_status, status_color
     ORDER BY receiving_status
   `)

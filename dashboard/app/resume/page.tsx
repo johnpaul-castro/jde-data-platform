@@ -7,11 +7,12 @@ export default function Resume() {
         <div className="flex items-start justify-between mb-10 pb-8 border-b border-slate-800">
           <div>
             <h1 className="text-4xl font-bold text-white mb-1">John Paul Castro</h1>
-            <p className="text-blue-400 text-lg font-medium mb-3">Senior Data Platform & BI Architect | Modern Data Stack · Azure · dbt · Airflow · Kimball</p>
+            <p className="text-blue-400 text-lg font-medium mb-3">Senior Data Platform & BI Architect | Azure Databricks · Kimball · dbt · Airflow · Modern Data Stack</p>
             <div className="flex flex-wrap gap-4 text-slate-400 text-sm">
               <span>📞 (818) 943-5159</span>
               <a href="mailto:johnpaulcastro@gmail.com" className="hover:text-blue-400 transition-colors">✉ johnpaulcastro@gmail.com</a>
               <a href="https://linkedin.com/in/johnpaul-castro" className="hover:text-blue-400 transition-colors">🔗 linkedin.com/in/johnpaul-castro</a>
+              <a href="https://github.com/johnpaul-castro" className="hover:text-blue-400 transition-colors">💻 github.com/johnpaul-castro</a>
               <span>📍 Cleveland, TN · Open to remote (US)</span>
             </div>
           </div>
@@ -28,7 +29,7 @@ export default function Resume() {
         <div className="mb-10">
           <h2 className="text-blue-400 text-xs uppercase tracking-widest font-semibold mb-4">Professional Summary</h2>
           <p className="text-slate-300 leading-relaxed">
-            Data platform architect with 20+ years building enterprise-grade data systems in aerospace, entertainment, and
+            Data platform architect with 25+ years building enterprise-grade data systems in aerospace, entertainment, and
             telecommunications. I design the infrastructure that turns ERP chaos into clean, governed, decision-ready data — from legacy
             ETL pipelines to cloud-native Lakehouse architectures on Azure Databricks. Deep expertise in Kimball dimensional modeling,
             medallion architecture (Bronze/Silver/Gold), open-source data engineering (dbt Core, Apache Airflow, PostgreSQL), and
@@ -56,7 +57,7 @@ export default function Resume() {
               </div>
               <p className="text-slate-400 text-xs uppercase tracking-wide mb-3">Data Engineering</p>
               <div className="flex flex-wrap gap-2">
-                {["dbt Core","Apache Airflow","SSIS 2016/2022","Databricks Workflows","Qlik Replicate","Cognos Data Manager"].map(s => (
+                {["dbt Core","Apache Airflow","SSIS 2016/2022","Lakeflow Declarative Pipelines","Databricks Workflows","Qlik Replicate","Cognos Data Manager"].map(s => (
                   <span key={s} className="bg-blue-900/30 border border-blue-800/50 text-blue-300 text-xs px-3 py-1 rounded-full">{s}</span>
                 ))}
               </div>
@@ -219,7 +220,10 @@ export default function Resume() {
         <div className="mb-10">
           <h2 className="text-blue-400 text-xs uppercase tracking-widest font-semibold mb-4">Certifications & Training</h2>
           <ul className="text-slate-400 text-sm space-y-2">
-            <li>→ <span className="text-slate-300">dbt Fundamentals Certification</span> — dbt Labs <span className="text-slate-500"></span></li>
+            <li>→ <span className="text-orange-300 font-semibold">Databricks Certified Data Engineer Associate</span> — July 2026</li>
+            <li>→ <span className="text-orange-300">10 Databricks Knowledge Badges</span> — Lakeflow DLT, Unity Catalog, Delta Lake, Spark SQL, Workflows, AI/BI Dashboards, Genie Spaces, and more</li>
+            <li>→ <span className="text-slate-300">QlikSense Certification</span></li>
+            <li>→ <span className="text-slate-300">dbt Fundamentals Certification</span> — dbt Labs</li>
             <li>→ <span className="text-slate-300">IBM Cognos Data Manager Certification</span></li>
             <li>→ <span className="text-slate-300">Qlik Data Modeling for Qlik Sense</span> — 2021</li>
             <li>→ <span className="text-slate-300">Cognos Report Studio & Data Manager Training</span> — 2013–2015</li>

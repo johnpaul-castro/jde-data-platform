@@ -6,8 +6,8 @@ import Navbar from "./components/Navbar";
 const geist = Geist({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "JDE Data Platform",
-  description: "JDE Operations Dashboard — Built by JP Castro",
+  title: "JP Castro | Senior Data Architect Portfolio",
+  description: "Live data platform portfolio by JP Castro. Medallion architecture, Azure Databricks, Lakeflow DLT, Unity Catalog, Kimball dimensional modeling, Splink MDM, and AI-powered pipelines. 25+ years in aerospace, entertainment, and enterprise data engineering.",
   icons: { icon: "/favicon.svg" },
 };
 
