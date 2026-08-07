@@ -25,6 +25,12 @@ fastify.get('/health', async () => {
   return { status: 'ok', timestamp: new Date() }
 })
 
+// ── Date offset for demo data ────────────────────────────────────────────
+// All demo dates were seeded around 2026-04-10. This SQL snippet shifts
+// every date forward so the platform always looks current.
+const DATE_ANCHOR = `'2026-04-10'::date`
+const OFFSET = `(CURRENT_DATE - ${DATE_ANCHOR})`
+
 // Get all customers from Silver
 fastify.get('/api/customers', async (req, reply) => {
   const result = await db.query(`
@@ -62,7 +68,9 @@ fastify.get('/api/inventory', async (req, reply) => {
 // Get sales by customer from Gold
 fastify.get('/api/sales', async (req, reply) => {
   const result = await db.query(`
-    SELECT *
+    SELECT customer_id, customer_name, total_orders, total_quantity,
+      total_revenue, avg_unit_price,
+      (last_order_date::date + ${OFFSET})::text AS last_order_date
     FROM gold.sales_by_customer
     ORDER BY total_revenue DESC
     LIMIT 50
@@ -98,20 +106,22 @@ fastify.get('/api/reports/pipeline', async (req, reply) => {
   const result = await db.query(`
     SELECT
       h.order_id, h.sold_to_id, a.address_name AS customer_name,
-      h.date_transaction, h.date_requested, h.date_promised,
+      (h.date_transaction::date + ${OFFSET})::text AS date_transaction,
+      (h.date_requested::date + ${OFFSET})::text AS date_requested,
+      (h.date_promised::date + ${OFFSET})::text AS date_promised,
       h.order_total, h.business_unit,
       COUNT(d.line_number) AS line_count,
       SUM(d.quantity_ordered) AS total_qty,
       SUM(d.quantity_shipped) AS total_shipped,
       SUM(d.extended_amount) AS total_value,
-      CURRENT_DATE - h.date_requested::date AS days_outstanding,
+      CURRENT_DATE - (h.date_requested::date + ${OFFSET}) AS days_outstanding,
       CASE
-        WHEN CURRENT_DATE - h.date_requested::date <= 30 THEN '0-30 days'
-        WHEN CURRENT_DATE - h.date_requested::date <= 60 THEN '31-60 days'
-        WHEN CURRENT_DATE - h.date_requested::date <= 90 THEN '61-90 days'
+        WHEN CURRENT_DATE - (h.date_requested::date + ${OFFSET}) <= 30 THEN '0-30 days'
+        WHEN CURRENT_DATE - (h.date_requested::date + ${OFFSET}) <= 60 THEN '31-60 days'
+        WHEN CURRENT_DATE - (h.date_requested::date + ${OFFSET}) <= 90 THEN '61-90 days'
         ELSE '90+ days'
       END AS aging_bucket,
-      CASE WHEN CURRENT_DATE - h.date_requested::date > 60 THEN true ELSE false END AS at_risk
+      CASE WHEN CURRENT_DATE - (h.date_requested::date + ${OFFSET}) > 60 THEN true ELSE false END AS at_risk
     FROM silver.sales_order_header h
     JOIN silver.sales_order_detail d ON h.order_id = d.order_id
     LEFT JOIN silver.address_book a ON h.sold_to_id = a.address_id
@@ -128,16 +138,18 @@ fastify.get('/api/reports/purchase-orders', async (req, reply) => {
   const result = await db.query(`
     SELECT
       h.order_id, h.vendor_id, a.address_name AS vendor_name,
-      h.date_transaction, h.date_requested, h.date_promised,
+      (h.date_transaction::date + ${OFFSET})::text AS date_transaction,
+      (h.date_requested::date + ${OFFSET})::text AS date_requested,
+      (h.date_promised::date + ${OFFSET})::text AS date_promised,
       h.order_total, h.business_unit,
       COUNT(d.line_number) AS line_count,
       SUM(d.quantity_received) AS total_received,
       SUM(d.extended_amount) AS total_value,
-      CURRENT_DATE - h.date_requested::date AS days_outstanding,
+      CURRENT_DATE - (h.date_requested::date + ${OFFSET}) AS days_outstanding,
       CASE
-        WHEN CURRENT_DATE - h.date_requested::date <= 30 THEN '0-30 days'
-        WHEN CURRENT_DATE - h.date_requested::date <= 60 THEN '31-60 days'
-        WHEN CURRENT_DATE - h.date_requested::date <= 90 THEN '61-90 days'
+        WHEN CURRENT_DATE - (h.date_requested::date + ${OFFSET}) <= 30 THEN '0-30 days'
+        WHEN CURRENT_DATE - (h.date_requested::date + ${OFFSET}) <= 60 THEN '31-60 days'
+        WHEN CURRENT_DATE - (h.date_requested::date + ${OFFSET}) <= 90 THEN '61-90 days'
         ELSE '90+ days'
       END AS aging_bucket
     FROM silver.purchase_order_header h
@@ -159,8 +171,8 @@ fastify.get('/api/reports/customer-history', async (req, reply) => {
       COUNT(DISTINCT h.order_id) AS total_orders,
       SUM(d.extended_amount) AS total_value,
       AVG(d.extended_amount) AS avg_order_value,
-      MIN(h.date_transaction) AS first_order,
-      MAX(h.date_transaction) AS last_order,
+      (MIN(h.date_transaction)::date + ${OFFSET})::text AS first_order,
+      (MAX(h.date_transaction)::date + ${OFFSET})::text AS last_order,
       SUM(d.quantity_ordered) AS total_qty_ordered,
       SUM(d.quantity_shipped) AS total_qty_shipped,
       ROUND(CASE WHEN SUM(d.quantity_ordered) > 0
@@ -207,8 +219,8 @@ fastify.get('/api/reports/spend-analysis', async (req, reply) => {
       SUM(d.extended_amount) AS total_spend,
       AVG(d.unit_cost) AS avg_unit_cost,
       SUM(d.quantity_received) AS total_received,
-      MIN(h.date_transaction) AS first_order,
-      MAX(h.date_transaction) AS last_order,
+      (MIN(h.date_transaction)::date + ${OFFSET})::text AS first_order,
+      (MAX(h.date_transaction)::date + ${OFFSET})::text AS last_order,
       ROUND(SUM(d.extended_amount) * 100.0 /
         NULLIF(SUM(SUM(d.extended_amount)) OVER (), 0), 1) AS spend_pct
     FROM silver.purchase_order_header h
@@ -238,7 +250,9 @@ fastify.get('/api/customers/:id/sales', async (req, reply) => {
   const { id } = req.params
   const { search } = req.query
   let query = `
-    SELECT h.order_id, h.date_transaction, h.date_requested,
+    SELECT h.order_id,
+      (h.date_transaction::date + ${OFFSET})::text AS date_transaction,
+      (h.date_requested::date + ${OFFSET})::text AS date_requested,
       SUM(d.extended_amount) AS order_total,
       COUNT(d.line_number) AS line_count,
       SUM(d.quantity_ordered) AS total_qty
@@ -270,7 +284,10 @@ fastify.get('/api/customers/:id/orders/:order_id', async (req, reply) => {
     LIMIT 1
   `, [id])
   const headerRes = await db.query(`
-    SELECT order_id, date_transaction, date_requested, sold_to_id
+    SELECT order_id,
+      (date_transaction::date + ${OFFSET})::text AS date_transaction,
+      (date_requested::date + ${OFFSET})::text AS date_requested,
+      sold_to_id
     FROM silver.sales_order_header WHERE order_id = $1
   `, [order_id])
   const linesRes = await db.query(`
@@ -293,7 +310,8 @@ fastify.get('/api/customers/:id/orders/:order_id', async (req, reply) => {
 fastify.get('/api/purchasing', async (req, reply) => {
   const result = await db.query(`
     SELECT vendor_id, vendor_name, total_orders, total_received,
-           total_spend, avg_unit_cost, last_order_date
+           total_spend, avg_unit_cost,
+           (last_order_date::date + ${OFFSET})::text AS last_order_date
     FROM gold.purchasing_by_vendor
     ORDER BY total_spend DESC
     LIMIT 10
@@ -654,8 +672,8 @@ fastify.get('/api/mdm/golden-sales', async (req, reply) => {
       COUNT(DISTINCT s.order_id) AS total_orders,
       COALESCE(SUM(s.order_amount), 0) AS total_revenue,
       COUNT(DISTINCT s.source_system) AS erp_count,
-      MIN(s.order_date) AS first_order,
-      MAX(s.order_date) AS last_order
+      (MIN(s.order_date)::date + ${OFFSET})::text AS first_order,
+      (MAX(s.order_date)::date + ${OFFSET})::text AS last_order
     FROM mdm.customer_xref x
     JOIN all_sales s
       ON x.source_system = s.source_system
@@ -686,7 +704,7 @@ fastify.get('/api/mdm/sales-detail', async (req, reply) => {
       s.order_id,
       s.source_system,
       s.source_customer_id,
-      s.order_date,
+      (s.order_date::date + ${OFFSET})::text AS order_date,
       s.order_amount,
       s.currency_code,
       x.cluster_id AS golden_customer_id,
