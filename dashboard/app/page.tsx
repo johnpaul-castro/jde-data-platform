@@ -1,4 +1,5 @@
 import Link from "next/link";
+import PlatformStats from "./components/PlatformStats";
 
 export default function Home() {
   const cards = [
@@ -184,6 +185,9 @@ export default function Home() {
             &quot;THE BOEING COMPANY&quot; into golden records with consolidated sales visibility.
           </p>
         </div>
+
+        {/* ── Live platform metrics ────────────────────────── */}
+        <PlatformStats />
 
         {/* Terminology */}
         <details className="bg-slate-900/40 border border-slate-800 rounded-xl p-5 mb-12 group">

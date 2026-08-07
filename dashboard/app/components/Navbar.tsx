@@ -108,6 +108,11 @@ export default function Navbar() {
               (pathname === "/resume" ? "text-blue-400" : "text-slate-400 hover:text-slate-100")}>
             Resume
           </Link>
+          <Link href="/blog" onClick={closeAll}
+            className={"px-3 py-4 text-sm font-medium transition-colors " +
+              (pathname.startsWith("/blog") ? "text-blue-400" : "text-slate-400 hover:text-slate-100")}>
+            Blog
+          </Link>
           <div className="ml-auto flex items-center gap-2">
             <ThemeToggle />
             <Link href="/rfq" onClick={closeAll}
@@ -154,6 +159,7 @@ export default function Navbar() {
             <Link href="/databricks" onClick={closeAll} className="block px-4 py-3 text-sm text-orange-300 hover:bg-slate-800">Databricks</Link>
             <Link href="/architecture" onClick={closeAll} className="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-800">Architecture</Link>
             <Link href="/resume" onClick={closeAll} className="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-800">Resume</Link>
+            <Link href="/blog" onClick={closeAll} className="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-800">Blog</Link>
           </div>
         </div>
       )}
