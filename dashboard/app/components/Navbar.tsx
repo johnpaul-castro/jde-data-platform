@@ -55,8 +55,8 @@ export default function Navbar() {
       <nav className="bg-slate-900 border-b border-slate-800 px-4 md:px-8 h-14 flex items-center relative z-50">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 mr-6" onClick={closeAll}>
-          <span className="text-blue-400 font-bold text-lg tracking-tight">JDE</span>
-          <span className="text-slate-400 text-sm hidden sm:inline">Platform</span>
+          <span className="text-blue-400 font-bold text-lg tracking-tight">JP</span>
+          <span className="text-slate-400 text-sm hidden sm:inline">Castro</span>
         </Link>
 
         {/* Desktop nav */}

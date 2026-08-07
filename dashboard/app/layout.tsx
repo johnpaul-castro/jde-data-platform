@@ -9,6 +9,18 @@ export const metadata: Metadata = {
   title: "JP Castro | Senior Data Architect Portfolio",
   description: "Live data platform portfolio by JP Castro. Medallion architecture, Azure Databricks, Lakeflow DLT, Unity Catalog, Kimball dimensional modeling, Splink MDM, and AI-powered pipelines. 25+ years in aerospace, entertainment, and enterprise data engineering.",
   icons: { icon: "/favicon.svg" },
+  openGraph: {
+    title: "JP Castro | Senior Data Architect & Engineer",
+    description: "25+ years building enterprise data systems. Azure Databricks, Kimball, dbt, Airflow. Live portfolio with running dashboards, MDM, and AI-powered pipelines.",
+    url: "https://jpcenterprises.com",
+    siteName: "JP Castro Portfolio",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "JP Castro | Senior Data Architect & Engineer",
+    description: "25+ years building enterprise data systems. Live portfolio with Azure Databricks, Kimball dimensional modeling, and AI-powered pipelines.",
+  },
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
