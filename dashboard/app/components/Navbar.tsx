@@ -88,6 +88,11 @@ export default function Navbar() {
               </div>
             );
           })}
+          <Link href="/projects" onClick={closeAll}
+            className={"px-3 py-4 text-sm font-medium transition-colors " +
+              (pathname === "/projects" ? "text-blue-400" : "text-slate-400 hover:text-slate-100")}>
+            Projects
+          </Link>
           <Link href="/databricks" onClick={closeAll}
             className={"px-3 py-4 text-sm font-medium transition-colors " +
               (pathname === "/databricks" ? "text-orange-400" : "text-slate-400 hover:text-slate-100")}>
@@ -145,6 +150,7 @@ export default function Navbar() {
             </div>
           ))}
           <div className="border-b border-slate-800">
+            <Link href="/projects" onClick={closeAll} className="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-800">Projects</Link>
             <Link href="/databricks" onClick={closeAll} className="block px-4 py-3 text-sm text-orange-300 hover:bg-slate-800">Databricks</Link>
             <Link href="/architecture" onClick={closeAll} className="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-800">Architecture</Link>
             <Link href="/resume" onClick={closeAll} className="block px-4 py-3 text-sm text-slate-300 hover:bg-slate-800">Resume</Link>

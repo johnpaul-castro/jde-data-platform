@@ -141,6 +141,32 @@ export default function Home() {
           </div>
         </div>
 
+        {/* ── What I bring ─────────────────────────────────── */}
+        <div className="bg-slate-900/40 border border-slate-800 rounded-xl p-8 mb-8">
+          <h2 className="text-lg font-bold text-white mb-4">What I Bring</h2>
+          <p className="text-slate-300 text-sm leading-relaxed mb-5">
+            I take messy ERP data and turn it into governed, query-ready assets. If your company
+            runs on JD Edwards, SAP, Oracle, or any legacy system where critical data is locked in
+            cryptic tables with Julian dates and five-character codes, I build the infrastructure
+            that makes that data usable: clean schemas, automated pipelines, dimensional models,
+            and live dashboards your team can actually trust.
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            <div className="bg-slate-800/50 rounded-lg p-4">
+              <p className="text-blue-400 text-sm font-semibold mb-1">Cloud Lakehouse</p>
+              <p className="text-slate-400 text-xs">Azure Databricks, Delta Lake, Unity Catalog, Lakeflow DLT. Production pipelines that run in minutes, not hours.</p>
+            </div>
+            <div className="bg-slate-800/50 rounded-lg p-4">
+              <p className="text-blue-400 text-sm font-semibold mb-1">Data Architecture</p>
+              <p className="text-slate-400 text-xs">Kimball dimensional modeling, medallion architecture, SCD Type 2, data governance. Designed to last decades.</p>
+            </div>
+            <div className="bg-slate-800/50 rounded-lg p-4">
+              <p className="text-blue-400 text-sm font-semibold mb-1">Full-Stack Delivery</p>
+              <p className="text-slate-400 text-xs">I do not hand off specs. I build the pipeline, the API, the dashboard, and the deployment. One engineer, end to end.</p>
+            </div>
+          </div>
+        </div>
+
         {/* ── Featured project callout ───────────────────────── */}
         <div className="bg-slate-900/60 border border-slate-800 rounded-xl p-6 mb-6">
           <div className="flex items-center gap-3 mb-3">
