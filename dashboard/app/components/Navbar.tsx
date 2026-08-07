@@ -2,6 +2,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import ThemeToggle from "./ThemeToggle";
 
 const navItems = [
   {
@@ -102,7 +103,8 @@ export default function Navbar() {
               (pathname === "/resume" ? "text-blue-400" : "text-slate-400 hover:text-slate-100")}>
             Resume
           </Link>
-          <div className="ml-auto">
+          <div className="ml-auto flex items-center gap-2">
+            <ThemeToggle />
             <Link href="/rfq" onClick={closeAll}
               className="px-4 py-1.5 rounded-lg text-sm font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors">
               Submit RFQ
@@ -111,7 +113,8 @@ export default function Navbar() {
         </div>
 
         {/* Mobile right side */}
-        <div className="md:hidden ml-auto flex items-center gap-3">
+        <div className="md:hidden ml-auto flex items-center gap-2">
+          <ThemeToggle />
           <Link href="/rfq" onClick={closeAll}
             className="px-3 py-1 rounded-lg text-xs font-medium bg-blue-600 hover:bg-blue-500 text-white transition-colors">
             RFQ

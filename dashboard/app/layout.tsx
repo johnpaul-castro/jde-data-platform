@@ -13,7 +13,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: `
+          try { if (localStorage.getItem('theme') === 'light') document.documentElement.classList.add('light'); } catch(e) {}
+        `}} />
+      </head>
       <body className={geist.className + " min-h-screen bg-slate-950 text-white"}>
         <Navbar />
         <div className="max-w-7xl mx-auto px-10 py-8">
